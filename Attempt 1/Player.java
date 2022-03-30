@@ -26,6 +26,8 @@ public class Player {
 
    private Image playerImage, playerLeftImage, playerRightImage;
 
+   
+
    public Player (JFrame window, TileMap t) {
       this.window = window;
       tileMap = t;			// tile map on which the player's sprite is displayed
@@ -42,7 +44,7 @@ public class Player {
 
 
    public void draw (Graphics2D g2) {
-	g2.drawImage (playerImage, x, y, XSIZE, YSIZE, null);
+	   g2.drawImage (playerImage, x, y, XSIZE, YSIZE, null);
    }
 
 

@@ -56,6 +56,8 @@ public class GameWindow extends JFrame implements
 	TileMapManager tileManager;
 	TileMap	tileMap;
 
+	private Inventory inventory;
+
 	public GameWindow() {
  
 		super("Tiled Bat and Ball Game: Full Screen Exclusive Mode");
@@ -74,6 +76,8 @@ public class GameWindow extends JFrame implements
 		loadAnimation();
 		soundManager = SoundManager.getInstance();
 		image = new BufferedImage (pWidth, pHeight, BufferedImage.TYPE_INT_RGB);
+
+		inventory = new Inventory();
 
 		startGame();
 	}
@@ -158,6 +162,7 @@ public class GameWindow extends JFrame implements
 
 	public void gameRender (Graphics gScr) {		// draw the game objects
 
+		//gameRenderTest(gScr);
 		Graphics2D imageContext = (Graphics2D) image.getGraphics();
 
 		bgManager.draw(imageContext);
@@ -170,6 +175,30 @@ public class GameWindow extends JFrame implements
 
 		//Graphics2D g2 = (Graphics2D) getGraphics();	// get the graphics context for window
 		drawButtons(imageContext);			// draw the buttons
+
+		Graphics2D g2 = (Graphics2D) gScr;
+		g2.drawImage(image, 0, 0, pWidth, pHeight, null);
+
+		imageContext.dispose();
+		g2.dispose();
+
+
+	}
+
+	public void gameRenderTest (Graphics gScr) {		// draw the game objects
+
+		Graphics2D imageContext = (Graphics2D) image.getGraphics();
+
+		//bgManager.draw(imageContext);
+		//tileMap.draw(imageContext);
+	
+		//if (isAnimShown)
+			//animation.draw(imageContext);		// draw the animation
+
+		//imageEffect.draw(imageContext);			// draw the image effect
+
+		//Graphics2D g2 = (Graphics2D) getGraphics();	// get the graphics context for window
+		//drawButtons(imageContext);			// draw the buttons
 
 		Graphics2D g2 = (Graphics2D) gScr;
 		g2.drawImage(image, 0, 0, pWidth, pHeight, null);
@@ -501,6 +530,19 @@ public class GameWindow extends JFrame implements
 		if (keyCode == KeyEvent.VK_DOWN) {
 			//bat.moveDown();
 		}
+		else
+		if (keyCode == KeyEvent.VK_I) {
+			
+
+			if(inventory.isVisible()) {
+				inventory.setVisible(false);
+
+				debug();
+			}
+			else {
+				inventory.setVisible(true);
+			}
+		}
 
 	}
 
@@ -607,6 +649,10 @@ public class GameWindow extends JFrame implements
 			isOverPauseAnimButton = pauseAnimButtonArea.contains(x,y) ? true : false;
 			isOverQuitButton = quitButtonArea.contains(x,y) ? true : false;
 		}
+	}
+
+	private void debug() {
+		System.out.println("hi");
 	}
 
 }
