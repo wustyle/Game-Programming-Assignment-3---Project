@@ -233,4 +233,24 @@ public class TileMap {
 	player.moveRight();
 
     }
+
+    public void moveUp() {
+        int x;
+        x = player.getX();
+        String mess = "Going left. x = " + x;
+        System.out.println(mess);
+    
+        player.moveLeft();
+    
+        }
+    
+        public void moveDown() {
+        int x;
+        x = player.getX();
+        String mess = "Going right. x = " + x;
+        System.out.println(mess);
+    
+        player.moveRight();
+    
+        }
 }

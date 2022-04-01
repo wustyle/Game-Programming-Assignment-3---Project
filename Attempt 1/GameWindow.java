@@ -90,6 +90,9 @@ public class GameWindow extends JFrame implements
 
 		inventory.setLocation(getBounds().width - 320, getBounds().height - 320);
 		add(inventory);
+
+		inventory.setVisible(true);
+		inventory.setVisible(false);
 		isInventoryVisible = false;
 	}
 
@@ -539,11 +542,13 @@ public class GameWindow extends JFrame implements
 		}
 		else
 		if (keyCode == KeyEvent.VK_UP) {
-			//bat.moveUp();
+			bgManager.moveUp();
+			tileMap.moveUp();
 		}
 		else
 		if (keyCode == KeyEvent.VK_DOWN) {
-			//bat.moveDown();
+			bgManager.moveDown();
+			tileMap.moveDown();
 		}
 		else
 		if (keyCode == KeyEvent.VK_I) {

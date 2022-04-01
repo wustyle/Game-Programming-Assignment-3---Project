@@ -38,7 +38,7 @@ public class Player {
       playerImage = playerRightImage;
 
       x = (int) ((window.getWidth() - playerRightImage.getWidth(null)) / 2);
-      y = 380;
+      y = (int) ((window.getHeight() - playerRightImage.getHeight(null)) / 2);;
 
    }
 
@@ -103,8 +103,53 @@ public class Player {
 
    }
 
-
    public void moveUp () {
+      Dimension dimension;
+
+      if (!window.isVisible ()) return;
+
+      playerImage = playerLeftImage;
+
+      dimension = window.getSize();
+
+      if ((y - DY) > 0)
+      	  y = y - DY;
+
+      // check if x is outside the left side of the tile map
+   }
+
+
+   public void moveDown () {
+      Dimension dimension;
+
+      if (!window.isVisible ()) return;
+
+      playerImage = playerRightImage;
+
+      dimension = window.getSize();
+
+      int tileMapWidth = tileMap.getHeightPixels(); // double check if not working
+
+      int playerWidth = playerImage.getWidth(null);
+
+      if ((x + DX + playerWidth) <= tileMapWidth) {
+
+	  int xTile = tileMap.pixelsToTiles(x + DX + playerWidth);
+	  int yTile = tileMap.pixelsToTiles(y) - 1;
+
+          String mess = "Coordinates in TileMap: (" + xTile + "," + yTile + ")";
+	  System.out.println (mess);
+
+	  if (tileMap.getTile(xTile, yTile) == null)
+	  	x = x + DX;
+      }
+
+      // check if x is outside the right side of the tile map.
+
+   }
+
+   //old code
+   /* public void moveUp () {
 
       if (!window.isVisible ()) return;
 
@@ -117,7 +162,7 @@ public class Player {
       if (!window.isVisible ()) return;
 
       y = y + DY;
-   }
+   } */
 
 
    public int getX() {

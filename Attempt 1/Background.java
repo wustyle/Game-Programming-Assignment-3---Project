@@ -80,6 +80,53 @@ public class Background {
 		backgroundX2 = 0;
 	}			
    }
+
+   //a copy of moveLeft to be edited
+   public void moveUp() {
+
+	if (bgX == 0) {
+		backgroundX = bgImageWidth * -1;
+		backgroundX2 = 0;			
+	}
+
+	bgX = bgX + bgDX;
+				
+	backgroundX = backgroundX + bgDX;	
+	backgroundX2 = backgroundX2 + bgDX;
+
+	String mess = "Left: bgX=" + bgX + " bgX1=" + backgroundX + " bgX2=" + backgroundX2;
+	//System.out.println (mess);
+
+	if ((bgX + bgImageWidth) % bgImageWidth == 0) {
+		System.out.println ("Background change: bgX = " + bgX); 
+		backgroundX = bgImageWidth * -1;
+		backgroundX2 = 0;
+	}			
+   }
+
+	//a copy of moveRight to be edited
+   public void moveDown() {
+
+	if (bgX == 0) {
+		backgroundX = 0;
+		backgroundX2 = bgImageWidth;			
+	}
+
+	bgX = bgX - bgDX;
+
+	backgroundX = backgroundX - bgDX;
+	backgroundX2 = backgroundX2 - bgDX;
+
+	String mess = "Right: bgX=" + bgX + " bgX1=" + backgroundX + " bgX2=" + backgroundX2;
+	//System.out.println (mess);
+
+	if ((bgX + bgImageWidth) % bgImageWidth == 0) {
+		System.out.println ("Background change: bgX = " + bgX); 
+		backgroundX = 0;
+		backgroundX2 = bgImageWidth;
+	}
+
+  }
  
 
   public void draw (Graphics2D g2) {

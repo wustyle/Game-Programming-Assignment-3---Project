@@ -58,6 +58,17 @@ public class BackgroundManager {
       			backgrounds[i].moveLeft();
   	}
 
+	  public void moveDown() { 
+		for (int i=0; i < numBackgrounds; i++)
+      			backgrounds[i].moveRight();
+  	}
+
+
+  	public void moveUp() {
+		for (int i=0; i < numBackgrounds; i++)
+      			backgrounds[i].moveLeft();
+  	}
+
 
   	// The draw method draws the backgrounds on the screen. The
   	// backgrounds are drawn from the back to the front.
