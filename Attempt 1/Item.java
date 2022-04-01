@@ -19,7 +19,7 @@ public class Item {
 
     private void setImage() {
         if (name == "") {
-            icon = new ImageIcon("");
+            icon = new ImageIcon("images/items/PNG/Background/Icon1.png");
             image = icon.getImage();
             
         }

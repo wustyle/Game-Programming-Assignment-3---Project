@@ -11,15 +11,20 @@ public class Inventory extends JPanel{
     private ArrayList<Item> items;
     
     public Inventory() {
-        setSize(500, 500);
+        setSize(320, 320);
 
         setLayout(new GridLayout(10, 10));
 
-        setLocation(getBounds().width - 500, getBounds().height - 500);
+        setLocation(getBounds().width - 320, getBounds().height - 320);
 
         items = new ArrayList<>(100);
 
-        setBackground(Color.WHITE);
+        for (int i = 0; i < 100 ; i++) {
+            addItem("");
+            System.out.println(items.size());
+        }
+
+        setBackground(Color.black);
         
     }
 
@@ -43,7 +48,9 @@ public class Inventory extends JPanel{
 
     public void addItem(String name) {
         if (items.size() < 100) {
-            items.add(new Item(name));
+            Item item = new Item(name);
+            items.add(item);
+            add(new JLabel(item.getIcon()));
         } 
         
     }

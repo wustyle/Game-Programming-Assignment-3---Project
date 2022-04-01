@@ -57,6 +57,7 @@ public class GameWindow extends JFrame implements
 	TileMap	tileMap;
 
 	private Inventory inventory;
+	private boolean isInventoryVisible;
 
 	public GameWindow() {
  
@@ -77,9 +78,19 @@ public class GameWindow extends JFrame implements
 		soundManager = SoundManager.getInstance();
 		image = new BufferedImage (pWidth, pHeight, BufferedImage.TYPE_INT_RGB);
 
+		initInventory();
+		
+		startGame();
+	}
+
+	private void initInventory() {
 		inventory = new Inventory();
 
-		startGame();
+		setLayout(null);
+
+		inventory.setLocation(getBounds().width - 320, getBounds().height - 320);
+		add(inventory);
+		isInventoryVisible = false;
 	}
 
 
@@ -178,6 +189,10 @@ public class GameWindow extends JFrame implements
 
 		Graphics2D g2 = (Graphics2D) gScr;
 		g2.drawImage(image, 0, 0, pWidth, pHeight, null);
+
+		if (isInventoryVisible) {
+			inventory.repaint();
+		}
 
 		imageContext.dispose();
 		g2.dispose();
@@ -536,11 +551,12 @@ public class GameWindow extends JFrame implements
 
 			if(inventory.isVisible()) {
 				inventory.setVisible(false);
-
-				debug();
+				isInventoryVisible = false;
+				
 			}
 			else {
 				inventory.setVisible(true);
+				isInventoryVisible = true;
 			}
 		}
 
