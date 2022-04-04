@@ -65,6 +65,10 @@ public class TileMap {
 	return tilesToPixels(mapWidth);
     }
 
+    public int getHeightPixels() {
+        return tilesToPixels(mapHeight);
+    }
+
 
     /**
         Gets the width of this TileMap (number of tiles across).
@@ -235,9 +239,9 @@ public class TileMap {
     }
 
     public void moveUp() {
-        int x;
-        x = player.getX();
-        String mess = "Going left. x = " + x;
+        int y;
+        y = player.getY();
+        String mess = "Going up. y = " + y;
         System.out.println(mess);
     
         player.moveLeft();

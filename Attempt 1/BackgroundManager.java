@@ -60,13 +60,13 @@ public class BackgroundManager {
 
 	  public void moveDown() { 
 		for (int i=0; i < numBackgrounds; i++)
-      			backgrounds[i].moveRight();
+      			backgrounds[i].moveDown();
   	}
 
 
   	public void moveUp() {
 		for (int i=0; i < numBackgrounds; i++)
-      			backgrounds[i].moveLeft();
+      			backgrounds[i].moveUp();
   	}
 
 

@@ -124,24 +124,24 @@ public class Player {
 
       if (!window.isVisible ()) return;
 
-      playerImage = playerRightImage;
+      playerImage = playerRightImage; // we need a player down image
 
       dimension = window.getSize();
 
-      int tileMapWidth = tileMap.getHeightPixels(); // double check if not working
+      int tileMapHeight = tileMap.getHeightPixels(); // double check if not working
 
-      int playerWidth = playerImage.getWidth(null);
+      int playerHeight = playerImage.getHeight(null);
 
-      if ((x + DX + playerWidth) <= tileMapWidth) {
+      if ((y + DY + playerHeight) <= tileMapHeight) {
 
-	  int xTile = tileMap.pixelsToTiles(x + DX + playerWidth);
-	  int yTile = tileMap.pixelsToTiles(y) - 1;
+	  int yTile = tileMap.pixelsToTiles(y + DY + playerHeight);
+	  int xTile = tileMap.pixelsToTiles(x) - 1;
 
           String mess = "Coordinates in TileMap: (" + xTile + "," + yTile + ")";
 	  System.out.println (mess);
 
 	  if (tileMap.getTile(xTile, yTile) == null)
-	  	x = x + DX;
+	  	y = y + DY;
       }
 
       // check if x is outside the right side of the tile map.
