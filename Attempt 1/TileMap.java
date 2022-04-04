@@ -244,17 +244,17 @@ public class TileMap {
         String mess = "Going up. y = " + y;
         System.out.println(mess);
     
-        player.moveLeft();
+        player.moveUp();
     
-        }
+    }
     
-        public void moveDown() {
-        int x;
-        x = player.getX();
-        String mess = "Going right. x = " + x;
+    public void moveDown() {
+        int y;
+        y = player.getY();
+        String mess = "Going down. y = " + y;
         System.out.println(mess);
     
-        player.moveRight();
+        player.moveDown();
     
-        }
+    }
 }
