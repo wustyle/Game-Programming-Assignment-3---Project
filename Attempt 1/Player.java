@@ -128,6 +128,9 @@ public class Player {
 
       dimension = window.getSize();
 
+      if ((y + DY + playerImage.getHeight(null)) < dimension.getHeight())
+      	  y = y + DY;
+/*
       int tileMapHeight = tileMap.getHeightPixels(); // double check if not working
 
       int playerHeight = playerImage.getHeight(null);
@@ -142,7 +145,7 @@ public class Player {
 
 	  if (tileMap.getTile(xTile, yTile) == null)
 	  	y = y + DY;
-      }
+      } */
 
       // check if x is outside the right side of the tile map.
 

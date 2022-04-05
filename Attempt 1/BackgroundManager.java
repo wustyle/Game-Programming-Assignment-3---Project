@@ -16,7 +16,7 @@ import javax.swing.JFrame;
 
 public class BackgroundManager {
 
-	private String bgImages[] = {"images/layer_08.png",
+	/* private String bgImages[] = {"images/layer_08.png",
 			       	     "images/layer_07.png",
 				     "images/layer_06.png",
 				     "images/layer_05.png",
@@ -25,9 +25,14 @@ public class BackgroundManager {
 				     "images/layer_02.png",
 			       	     "images/layer_01.png"};
 
-  	private int moveAmount[] = {1, 2, 3, 4, 4, 4, 5, 10};  
+  	private int moveAmount[] = {1, 2, 3, 4, 4, 4, 5, 10};   */
 						// pixel amounts to move each background left or right
      						// a move amount of 0 makes a background stationary
+
+	// testing a new big bg
+	private String bgImages[] = {"images/BG's/8.jpg"};
+
+	private int moveAmount[] = {50};
 
   	private Background[] backgrounds;
   	private int numBackgrounds;

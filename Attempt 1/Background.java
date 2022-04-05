@@ -11,6 +11,8 @@ public class Background {
 
 	private JFrame window;
 	private Dimension dimension;
+	private int screenHeight;
+	private int screenWidth;
 
  	private int bgX;
 	private int backgroundX;
@@ -35,6 +37,8 @@ public class Background {
 
 
 	dimension = window.getSize();
+	screenHeight = (int) dimension.getHeight();
+	screenWidth = (int) dimension.getWidth();
 
 	if (bgImageWidth < dimension.width)
       	System.out.println("Background width < panel width");
@@ -61,6 +65,11 @@ public class Background {
 	backgroundX = backgroundX - bgDX;
 	backgroundX2 = backgroundX2 - bgDX;
 
+	if (backgroundX - screenWidth < (bgImageWidth * -1)) {
+		backgroundX = (bgImageWidth - screenWidth) * -1 ;
+		
+	}
+
 	String mess = "Right: bgX=" + bgX + " bgX1=" + backgroundX + " bgX2=" + backgroundX2;
 	//System.out.println (mess);
 
@@ -76,7 +85,8 @@ public class Background {
   public void moveLeft() {
 
 	if (bgX == 0) {
-		backgroundX = bgImageWidth * -1;
+		//backgroundX = bgImageWidth * -1;
+		backgroundX = 0;
 		backgroundX2 = 0;			
 	}
 
@@ -84,6 +94,10 @@ public class Background {
 				
 	backgroundX = backgroundX + bgDX;	
 	backgroundX2 = backgroundX2 + bgDX;
+
+	if (backgroundX > 0) {
+		backgroundX = 0;
+	}
 
 	String mess = "Left: bgX=" + bgX + " bgX1=" + backgroundX + " bgX2=" + backgroundX2;
 	//System.out.println (mess);
@@ -99,14 +113,21 @@ public class Background {
    public void moveUp() {
 
 	if (bgY == 0) {
-		backgroundY = bgImageHeight * -1;
+		//backgroundY = bgImageHeight * -1;
+		backgroundY = 0;
 		backgroundY2 = 0;			
 	}
 
 	bgY = bgY + bgDY;
+
+	
 				
 	backgroundY = backgroundY + bgDY;	
 	backgroundY2 = backgroundY2 + bgDY;
+
+	if (backgroundY > 0) {
+		backgroundY = 0;
+	}
 
 	String mess = "Left: bgY=" + bgY + " bgY1=" + backgroundY + " bgY2=" + backgroundY2;
 	//System.out.println (mess);
@@ -128,16 +149,24 @@ public class Background {
 
 	bgY = bgY - bgDY;
 
+	
+	
 	backgroundY = backgroundY - bgDY;
 	backgroundY2 = backgroundY2 - bgDY;
+
+
+	if (backgroundY - screenHeight < (bgImageHeight * -1)) {
+		backgroundY = (bgImageHeight - screenHeight) * -1 ;
+		
+	}
 
 	String mess = "Right: bgY=" + bgY + " bgY1=" + backgroundY + " bgY2=" + backgroundY2;
 	//System.out.println (mess);
 
-	if ((bgY + bgImageWidth) % bgImageWidth == 0) {
+	if ((bgY + bgImageHeight) % bgImageHeight == 0) {
 		System.out.println ("Background change: bgY = " + bgY); 
 		backgroundY = 0;
-		backgroundY2 = bgImageWidth;
+		backgroundY2 = bgImageHeight;
 	}
 
   }
@@ -145,7 +174,7 @@ public class Background {
 
   public void draw (Graphics2D g2) {
 	g2.drawImage(bgImage, backgroundX, backgroundY, null);
-	g2.drawImage(bgImage, backgroundX2, backgroundY2, null);
+	//g2.drawImage(bgImage, backgroundX2, backgroundY2, null);
   }
 
 
