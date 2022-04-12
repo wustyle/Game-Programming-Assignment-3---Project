@@ -1,3 +1,4 @@
+import javax.lang.model.util.ElementScanner6;
 import javax.swing.*;			// need this for GUI objects
 import java.awt.*;			// need this for certain AWT classes
 import java.awt.image.BufferedImage;
@@ -59,6 +60,9 @@ public class GameWindow extends JFrame implements
 	private Inventory inventory;
 	private boolean isInventoryVisible;
 
+	private boolean isCombat;
+	private boolean isChap2;
+
 	public GameWindow() {
  
 		super("Tiled Bat and Ball Game: Full Screen Exclusive Mode");
@@ -79,6 +83,9 @@ public class GameWindow extends JFrame implements
 		image = new BufferedImage (pWidth, pHeight, BufferedImage.TYPE_INT_RGB);
 
 		initInventory();
+
+		isCombat = false;
+		isChap2  = false;
 		
 		startGame();
 	}
@@ -145,9 +152,17 @@ public class GameWindow extends JFrame implements
 
 
 	public void gameUpdate () {
-		if (!isPaused && isAnimShown && !isAnimPaused)
-			animation.update();
-		imageEffect.update();
+
+		if (isCombat) {
+			
+		} else if (isChap2) {
+			
+		}
+		else if (!isPaused && isAnimShown && !isAnimPaused) {}
+			//animation.update();
+		//imageEffect.update();
+
+		
 	}
 
 
@@ -176,6 +191,43 @@ public class GameWindow extends JFrame implements
 
 	public void gameRender (Graphics gScr) {		// draw the game objects
 
+		if (isCombat) {
+			combatMap(gScr);
+		} 
+		else if (!isChap2) {
+			chap1(gScr);
+		} else {
+			chap2(gScr);
+		}
+
+		//gameRenderTest(gScr);
+		/* Graphics2D imageContext = (Graphics2D) image.getGraphics();
+
+		bgManager.draw(imageContext);
+		tileMap.draw(imageContext);
+	
+		if (isAnimShown)
+			animation.draw(imageContext);		// draw the animation
+
+		imageEffect.draw(imageContext);			// draw the image effect
+
+		//Graphics2D g2 = (Graphics2D) getGraphics();	// get the graphics context for window
+		drawButtons(imageContext);			// draw the buttons
+
+		Graphics2D g2 = (Graphics2D) gScr;
+		g2.drawImage(image, 0, 0, pWidth, pHeight, null);
+
+		if (isInventoryVisible) {
+			inventory.repaint();
+		}
+
+		imageContext.dispose();
+		g2.dispose(); */
+
+
+	}
+
+	private void chap1(Graphics gScr) {
 		//gameRenderTest(gScr);
 		Graphics2D imageContext = (Graphics2D) image.getGraphics();
 
@@ -199,8 +251,58 @@ public class GameWindow extends JFrame implements
 
 		imageContext.dispose();
 		g2.dispose();
+	}
 
+	private void chap2(Graphics gScr) {
+		//gameRenderTest(gScr);
+		Graphics2D imageContext = (Graphics2D) image.getGraphics();
 
+		bgManager.drawC2(imageContext);
+		tileMap.draw(imageContext);
+	
+		if (isAnimShown)
+			animation.draw(imageContext);		// draw the animation
+
+		imageEffect.draw(imageContext);			// draw the image effect
+
+		//Graphics2D g2 = (Graphics2D) getGraphics();	// get the graphics context for window
+		drawButtons(imageContext);			// draw the buttons
+
+		Graphics2D g2 = (Graphics2D) gScr;
+		g2.drawImage(image, 0, 0, pWidth, pHeight, null);
+
+		if (isInventoryVisible) {
+			inventory.repaint();
+		}
+
+		imageContext.dispose();
+		g2.dispose();
+	}
+
+	private void combatMap(Graphics gScr) {
+		//gameRenderTest(gScr);
+		Graphics2D imageContext = (Graphics2D) image.getGraphics();
+
+		bgManager.draw(imageContext);
+		tileMap.draw(imageContext);
+	
+		if (isAnimShown)
+			animation.draw(imageContext);		// draw the animation
+
+		imageEffect.draw(imageContext);			// draw the image effect
+
+		//Graphics2D g2 = (Graphics2D) getGraphics();	// get the graphics context for window
+		drawButtons(imageContext);			// draw the buttons
+
+		Graphics2D g2 = (Graphics2D) gScr;
+		g2.drawImage(image, 0, 0, pWidth, pHeight, null);
+
+		if (isInventoryVisible) {
+			inventory.repaint();
+		}
+
+		imageContext.dispose();
+		g2.dispose();
 	}
 
 	public void gameRenderTest (Graphics gScr) {		// draw the game objects
@@ -532,21 +634,33 @@ public class GameWindow extends JFrame implements
          	}
 		else
 		if (keyCode == KeyEvent.VK_LEFT) {
+			if (isCombat) {
+				return;
+			}
 			bgManager.moveLeft();
 			tileMap.moveLeft();
 		}
 		else
 		if (keyCode == KeyEvent.VK_RIGHT) {
+			if (isCombat) {
+				return;
+			}
 			bgManager.moveRight();
 			tileMap.moveRight();
 		}
 		else
 		if (keyCode == KeyEvent.VK_UP) {
+			if (isCombat) {
+				return;
+			}
 			bgManager.moveUp();
 			tileMap.moveUp();
 		}
 		else
 		if (keyCode == KeyEvent.VK_DOWN) {
+			if (isCombat) {
+				return;
+			}
 			bgManager.moveDown();
 			tileMap.moveDown();
 		}
@@ -564,7 +678,14 @@ public class GameWindow extends JFrame implements
 				isInventoryVisible = true;
 			}
 		}
-
+		else 
+		if (keyCode == KeyEvent.VK_C && !isCombat) {
+			isCombat = true;
+		}
+		else 
+		if (keyCode == KeyEvent.VK_N && !isChap2) {
+			isChap2 = true;
+		}
 	}
 
 

@@ -31,11 +31,17 @@ public class BackgroundManager {
 
 	// testing a new big bg
 	private String bgImages[] = {"images/BG's/8.jpg"};
+	private String bgImagesC2[] = {"images/BG's/10.jpg"};
+
 
 	private int moveAmount[] = {50};
 
   	private Background[] backgrounds;
+	private Background[] backgroundsC2;
+
   	private int numBackgrounds;
+	private int numBackgroundsC2;
+
 
   	private JFrame window;			// JFrame on which backgrounds are drawn
 
@@ -49,6 +55,14 @@ public class BackgroundManager {
     		for (int i = 0; i < numBackgrounds; i++) {
        			backgrounds[i] = new Background(window, bgImages[i], moveAmount[i]);
     		}
+
+
+    		numBackgroundsC2 = bgImagesC2.length;
+			backgroundsC2 = new Background[numBackgroundsC2];
+
+			for (int i = 0; i < numBackgroundsC2; i++) {
+				backgroundsC2[i] = new Background(window, bgImagesC2[i], moveAmount[i]);
+		 	}
   	} 
 
 
@@ -81,6 +95,11 @@ public class BackgroundManager {
   	public void draw (Graphics2D g2) { 
 		for (int i=0; i < numBackgrounds; i++)
       			backgrounds[i].draw(g2);
+  	}
+
+	public void drawC2 (Graphics2D g2) { 
+		for (int i=0; i < numBackgroundsC2; i++)
+      			backgroundsC2[i].draw(g2);
   	}
 
 }
