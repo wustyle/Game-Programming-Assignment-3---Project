@@ -16,7 +16,6 @@ public class Player {
    private static final int DY = 50;	// amount of Y pixels to move in one keystroke
 
    private JFrame window;		// reference to the JFrame on which player is drawn
-   private TileMap tileMap;
 
    private int x;			// x-position of player's sprite
    private int y;			// y-position of player's sprite
@@ -28,9 +27,8 @@ public class Player {
 
    
 
-   public Player (JFrame window, TileMap t) {
+   public Player (JFrame window) {
       this.window = window;
-      tileMap = t;			// tile map on which the player's sprite is displayed
 
       playerLeftImage = loadImage("images/playerLeft.gif");
       playerRightImage = loadImage("images/playerRight.gif");
@@ -83,21 +81,8 @@ public class Player {
 
       dimension = window.getSize();
 
-      int tileMapWidth = tileMap.getWidthPixels();
-
-      int playerWidth = playerImage.getWidth(null);
-
-      if ((x + DX + playerWidth) <= tileMapWidth) {
-
-	  int xTile = tileMap.pixelsToTiles(x + DX + playerWidth);
-	  int yTile = tileMap.pixelsToTiles(y) - 1;
-
-          String mess = "Coordinates in TileMap: (" + xTile + "," + yTile + ")";
-	  System.out.println (mess);
-
-	  if (tileMap.getTile(xTile, yTile) == null)
-	  	x = x + DX;
-      }
+      if ((x + DX + playerImage.getWidth(null)) < dimension.getWidth())
+      	  x = x + DX;
 
       // check if x is outside the right side of the tile map.
 

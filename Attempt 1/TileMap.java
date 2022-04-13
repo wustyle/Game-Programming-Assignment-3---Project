@@ -39,7 +39,7 @@ public class TileMap {
 	mapHeight = height;
 
         tiles = new Image[mapWidth][mapHeight];
-	player = new Player (window, this);
+	//player = new Player (window, this);
         sprites = new LinkedList();
 
 	Image playerImage = player.getImage();

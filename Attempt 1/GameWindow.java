@@ -63,6 +63,8 @@ public class GameWindow extends JFrame implements
 	private boolean isCombat;
 	private boolean isChap2;
 
+	private Player player;
+
 	public GameWindow() {
  
 		super("Tiled Bat and Ball Game: Full Screen Exclusive Mode");
@@ -86,6 +88,8 @@ public class GameWindow extends JFrame implements
 
 		isCombat = false;
 		isChap2  = false;
+
+		player = new Player(this);
 		
 		startGame();
 	}
@@ -232,7 +236,8 @@ public class GameWindow extends JFrame implements
 		Graphics2D imageContext = (Graphics2D) image.getGraphics();
 
 		bgManager.draw(imageContext);
-		tileMap.draw(imageContext);
+		//tileMap.draw(imageContext);
+		player.draw(imageContext);
 	
 		if (isAnimShown)
 			animation.draw(imageContext);		// draw the animation
@@ -258,7 +263,7 @@ public class GameWindow extends JFrame implements
 		Graphics2D imageContext = (Graphics2D) image.getGraphics();
 
 		bgManager.drawC2(imageContext);
-		tileMap.draw(imageContext);
+		player.draw(imageContext);
 	
 		if (isAnimShown)
 			animation.draw(imageContext);		// draw the animation
@@ -284,7 +289,7 @@ public class GameWindow extends JFrame implements
 		Graphics2D imageContext = (Graphics2D) image.getGraphics();
 
 		bgManager.draw(imageContext);
-		tileMap.draw(imageContext);
+		player.draw(imageContext);
 	
 		if (isAnimShown)
 			animation.draw(imageContext);		// draw the animation
@@ -576,9 +581,9 @@ public class GameWindow extends JFrame implements
 
 			bgManager = new BackgroundManager (this, 12);
 	
-			tileManager = new TileMapManager (this);
+			//tileManager = new TileMapManager (this);
 
-			try {
+			/* try {
 				tileMap = tileManager.loadMap("maps/map1.txt");
 				int w, h;
 				w = tileMap.getWidth();
@@ -589,7 +594,7 @@ public class GameWindow extends JFrame implements
 			catch (Exception e) {
 				System.out.println(e);
 				System.exit(0);
-			}
+			} */
 
 			imageEffect = new ImageEffect (this);
 			gameThread = new Thread(this);
@@ -638,7 +643,7 @@ public class GameWindow extends JFrame implements
 				return;
 			}
 			bgManager.moveLeft();
-			tileMap.moveLeft();
+			player.moveLeft();
 		}
 		else
 		if (keyCode == KeyEvent.VK_RIGHT) {
@@ -646,7 +651,7 @@ public class GameWindow extends JFrame implements
 				return;
 			}
 			bgManager.moveRight();
-			tileMap.moveRight();
+			player.moveRight();
 		}
 		else
 		if (keyCode == KeyEvent.VK_UP) {
@@ -654,7 +659,7 @@ public class GameWindow extends JFrame implements
 				return;
 			}
 			bgManager.moveUp();
-			tileMap.moveUp();
+			player.moveUp();
 		}
 		else
 		if (keyCode == KeyEvent.VK_DOWN) {
@@ -662,7 +667,7 @@ public class GameWindow extends JFrame implements
 				return;
 			}
 			bgManager.moveDown();
-			tileMap.moveDown();
+			player.moveDown();
 		}
 		else
 		if (keyCode == KeyEvent.VK_I) {
@@ -680,6 +685,9 @@ public class GameWindow extends JFrame implements
 		}
 		else 
 		if (keyCode == KeyEvent.VK_C && !isCombat) {
+			player.setX(300);
+			player.setY(400);
+
 			isCombat = true;
 		}
 		else 
