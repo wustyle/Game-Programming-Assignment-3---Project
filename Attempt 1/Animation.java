@@ -63,8 +63,8 @@ public class Animation {
     */
 
     public synchronized void start() {
-	x = 100;
-	y = 300;
+	//x = 100;
+	//y = 300;
 
 	active = 1;				// 1 indicates first animation sequence
         animTime = 0;				// reset time animation has run for, to zero
@@ -142,8 +142,8 @@ public class Animation {
 
 
     public void draw (Graphics2D g2) {		// draw the current frame on the JPanel
-	if (active == 0)
-		return;
+	//if (active == 0)
+		//return;
 
         g2.drawImage(getImage(), x, y, XSIZE, YSIZE, null);
     }
@@ -178,6 +178,11 @@ public class Animation {
 
     public void stopSound() {
 	soundManager.stopSound("birdSound");
+    }
+
+    public void setLocation(int X, int Y) {
+        x = X;
+        y = Y;
     }
 
 }

@@ -2,8 +2,10 @@ import javax.lang.model.util.ElementScanner6;
 import javax.swing.*;			// need this for GUI objects
 import java.awt.*;			// need this for certain AWT classes
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.awt.event.*;
 import java.awt.image.BufferStrategy;	// need this to implement page flipping
+import java.util.Random;
 
 
 public class GameWindow extends JFrame implements
@@ -65,6 +67,9 @@ public class GameWindow extends JFrame implements
 
 	private Player player;
 
+	private ArrayList<Enemy> enemies; 
+	private Enemy currTarget;
+
 	public GameWindow() {
  
 		super("Tiled Bat and Ball Game: Full Screen Exclusive Mode");
@@ -90,6 +95,9 @@ public class GameWindow extends JFrame implements
 		isChap2  = false;
 
 		player = new Player(this);
+
+		enemies = new ArrayList<>(); //should work
+
 		
 		startGame();
 	}
@@ -158,7 +166,9 @@ public class GameWindow extends JFrame implements
 	public void gameUpdate () {
 
 		if (isCombat) {
-			
+			for (Enemy enemy : enemies) {
+				enemy.update_Anim();
+			}
 		} else if (isChap2) {
 			
 		}
@@ -239,10 +249,10 @@ public class GameWindow extends JFrame implements
 		//tileMap.draw(imageContext);
 		player.draw(imageContext);
 	
-		if (isAnimShown)
-			animation.draw(imageContext);		// draw the animation
+		//if (isAnimShown)
+		//	animation.draw(imageContext);		// draw the animation
 
-		imageEffect.draw(imageContext);			// draw the image effect
+		//imageEffect.draw(imageContext);			// draw the image effect
 
 		//Graphics2D g2 = (Graphics2D) getGraphics();	// get the graphics context for window
 		drawButtons(imageContext);			// draw the buttons
@@ -265,10 +275,10 @@ public class GameWindow extends JFrame implements
 		bgManager.drawC2(imageContext);
 		player.draw(imageContext);
 	
-		if (isAnimShown)
-			animation.draw(imageContext);		// draw the animation
+		//if (isAnimShown)
+		//	animation.draw(imageContext);		// draw the animation
 
-		imageEffect.draw(imageContext);			// draw the image effect
+		//imageEffect.draw(imageContext);			// draw the image effect
 
 		//Graphics2D g2 = (Graphics2D) getGraphics();	// get the graphics context for window
 		drawButtons(imageContext);			// draw the buttons
@@ -290,11 +300,15 @@ public class GameWindow extends JFrame implements
 
 		bgManager.draw(imageContext);
 		player.draw(imageContext);
-	
-		if (isAnimShown)
-			animation.draw(imageContext);		// draw the animation
 
-		imageEffect.draw(imageContext);			// draw the image effect
+		for (Enemy enemy : enemies) {
+			enemy.draw(imageContext);
+		}
+	
+		//if (isAnimShown)
+		//	animation.draw(imageContext);		// draw the animation
+
+		//imageEffect.draw(imageContext);			// draw the image effect
 
 		//Graphics2D g2 = (Graphics2D) getGraphics();	// get the graphics context for window
 		drawButtons(imageContext);			// draw the buttons
@@ -688,12 +702,23 @@ public class GameWindow extends JFrame implements
 			player.setX(300);
 			player.setY(400);
 
+			spawnEnemies();
+
 			isCombat = true;
 		}
 		else 
 		if (keyCode == KeyEvent.VK_N && !isChap2) {
 			isChap2 = true;
 		}
+		else 
+		if (keyCode == KeyEvent.VK_A && isCombat) {
+			player.attack(currTarget);
+
+			for (Enemy enemy : enemies) {
+				enemy.act();
+			}
+		}
+		
 	}
 
 
@@ -803,6 +828,58 @@ public class GameWindow extends JFrame implements
 
 	private void debug() {
 		System.out.println("hi");
+	}
+
+	public void removeEnemy(Enemy enemy) {
+		try {
+			enemies.remove(enemy);
+
+			if (enemies.size() >= 1) {
+				currTarget = enemies.get(0);
+			}
+			else 
+			{
+				isCombat = false;
+
+				
+			}
+		} catch (Exception e) {
+			//TODO: handle exception
+		}
+	}
+
+	
+
+	private void spawnEnemies() {
+		Random rand = new Random();
+
+        int i = rand.nextInt(3);
+
+		
+
+        if (i == 1) {
+            enemies.add(new Enemy(this, player, 600, 200));
+
+			currTarget = enemies.get(0);
+        }
+        else if (i == 2) {
+            enemies.add(new Enemy(this, player, 600, 200));
+			enemies.add(new Enemy(this, player, 450, 400));
+
+			currTarget = enemies.get(0);
+        } else {
+            enemies.add(new Enemy(this, player, 900, 200));
+			enemies.add(new Enemy(this, player, 750, 400));
+			enemies.add(new Enemy(this, player, 900, 600));
+
+			currTarget = enemies.get(0);
+        }
+
+		
+	}
+
+	public void gameOver() {
+		// not sure if to make game over or not
 	}
 
 }

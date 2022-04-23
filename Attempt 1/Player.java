@@ -25,7 +25,14 @@ public class Player {
 
    private Image playerImage, playerLeftImage, playerRightImage;
 
-   
+
+
+
+   // Combat related stuff
+   private int lvl;
+   private int hp;
+   private int dmg;
+   private Equipment weapon;
 
    public Player (JFrame window) {
       this.window = window;
@@ -37,6 +44,10 @@ public class Player {
 
       x = (int) ((window.getWidth() - playerRightImage.getWidth(null)) / 2);
       y = (int) ((window.getHeight() - playerRightImage.getHeight(null)) / 2);;
+
+      weapon = new Equipment("sword");
+      lvl = 0;
+      lvlUp();
 
    }
 
@@ -175,6 +186,40 @@ public class Player {
 
    public Image getImage() {
       return playerImage;
+   }
+
+   private void lvlUp() {
+      lvl++;
+      hp = lvl * 5;
+      dmg = (lvl * 2) + weapon.getAtk();
+   }
+
+   private void equip(Equipment e) {
+      weapon = e;
+
+      dmg = (lvl * 2) + weapon.getAtk();
+   }
+
+   public int getDmg() {
+       return dmg;
+   }
+
+   public void attack(Enemy target) {
+      int enemyHP = target.getHP() - dmg;
+
+      if (enemyHP <= 0) {
+         target.die();
+      } else {
+         target.setHP(enemyHP);
+      }
+   }
+
+   public int getHp() {
+       return hp;
+   }
+
+   public void setHp(int hp) {
+       this.hp = hp;
    }
 
 }

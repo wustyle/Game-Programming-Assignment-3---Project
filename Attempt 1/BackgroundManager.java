@@ -69,23 +69,34 @@ public class BackgroundManager {
   	public void moveRight() { 
 		for (int i=0; i < numBackgrounds; i++)
       			backgrounds[i].moveRight();
+
+		backgroundsC2[0].moveRight();
+
   	}
 
 
   	public void moveLeft() {
 		for (int i=0; i < numBackgrounds; i++)
       			backgrounds[i].moveLeft();
+
+		backgroundsC2[0].moveLeft();
+
   	}
 
 	  public void moveDown() { 
 		for (int i=0; i < numBackgrounds; i++)
       			backgrounds[i].moveDown();
+		
+		
+      	backgroundsC2[0].moveDown();
   	}
 
 
   	public void moveUp() {
 		for (int i=0; i < numBackgrounds; i++)
       			backgrounds[i].moveUp();
+
+      	backgroundsC2[0].moveUp();
   	}
 
 

@@ -23,6 +23,11 @@ public class Item {
             image = icon.getImage();
             
         }
+        else if (name == "sword") {
+            icon = new ImageIcon("images/weapons icons/noglow/tile000.png");
+            image = icon.getImage();
+            
+        }
     }
 
     public String getName() {
