@@ -12,7 +12,8 @@ public class GameWindow extends JFrame implements
 				Runnable,
 				KeyListener,
 				MouseListener,
-				MouseMotionListener
+				MouseMotionListener,
+				ActionListener
 {
   	private static final int NUM_BUFFERS = 2;	// used for page flipping
 
@@ -70,6 +71,10 @@ public class GameWindow extends JFrame implements
 	private ArrayList<Enemy> enemies; 
 	private Enemy currTarget;
 
+	private CombatMenu CM;
+
+	ArrayList<JPanel> panels;
+
 	public GameWindow() {
  
 		super("Tiled Bat and Ball Game: Full Screen Exclusive Mode");
@@ -91,6 +96,12 @@ public class GameWindow extends JFrame implements
 
 		initInventory();
 
+		initCombatMenu();
+
+		panels = new ArrayList<>();
+
+		//panels.add(initNewPanel());
+
 		isCombat = false;
 		isChap2  = false;
 
@@ -100,6 +111,22 @@ public class GameWindow extends JFrame implements
 
 		
 		startGame();
+	}
+
+	private JPanel initNewPanel() {
+		JPanel p = new JPanel();
+		p.setSize(640, 640);
+		
+		
+
+		//setLayout(null);
+
+		p.setLocation(0, 0);
+		add(p);
+
+		p.setVisible(true);
+		
+		return p;
 	}
 
 	private void initInventory() {
@@ -113,6 +140,20 @@ public class GameWindow extends JFrame implements
 		inventory.setVisible(true);
 		inventory.setVisible(false);
 		isInventoryVisible = false;
+	}
+
+	private void initCombatMenu() {
+		//CM = new CombatMenu(player, this);
+		CM = new CombatMenu();
+
+		//setLayout(null);
+
+        CM.setLocation(0, 0);
+		add(CM);
+
+		CM.setVisible(true);
+		//CM.setVisible(false);
+		//isInventoryVisible = false;
 	}
 
 
@@ -165,11 +206,15 @@ public class GameWindow extends JFrame implements
 
 	public void gameUpdate () {
 
+		player.update_Anim();
+
 		if (isCombat) {
 			for (Enemy enemy : enemies) {
 				enemy.update_Anim();
 			}
 		} else if (isChap2) {
+			
+		} else if (!isChap2) {
 			
 		}
 		else if (!isPaused && isAnimShown && !isAnimPaused) {}
@@ -263,6 +308,8 @@ public class GameWindow extends JFrame implements
 		if (isInventoryVisible) {
 			inventory.repaint();
 		}
+		//panels.get(0).repaint();
+		CM.repaint();
 
 		imageContext.dispose();
 		g2.dispose();
@@ -304,6 +351,9 @@ public class GameWindow extends JFrame implements
 		for (Enemy enemy : enemies) {
 			enemy.draw(imageContext);
 		}
+
+		
+		
 	
 		//if (isAnimShown)
 		//	animation.draw(imageContext);		// draw the animation
@@ -315,6 +365,11 @@ public class GameWindow extends JFrame implements
 
 		Graphics2D g2 = (Graphics2D) gScr;
 		g2.drawImage(image, 0, 0, pWidth, pHeight, null);
+
+		if (!CM.isVisible()) {
+			CM.setVisible(true);
+		}
+		CM.repaint();
 
 		if (isInventoryVisible) {
 			inventory.repaint();
@@ -704,7 +759,11 @@ public class GameWindow extends JFrame implements
 
 			spawnEnemies();
 
+			CM.setVisible(true);
+
 			isCombat = true;
+
+
 		}
 		else 
 		if (keyCode == KeyEvent.VK_N && !isChap2) {
@@ -712,13 +771,22 @@ public class GameWindow extends JFrame implements
 		}
 		else 
 		if (keyCode == KeyEvent.VK_A && isCombat) {
-			player.attack(currTarget);
+			attack();
+		}
+		else 
+		if (keyCode == KeyEvent.VK_X) {
 
-			for (Enemy enemy : enemies) {
-				enemy.act();
+			System.out.println(CM.isVisible());
+			if(CM.isVisible()) {
+				CM.setVisible(false);
+				//isInventoryVisible = false;
+				
+			}
+			else {
+				CM.setVisible(true);
+				//isInventoryVisible = true;
 			}
 		}
-		
 	}
 
 
@@ -880,6 +948,33 @@ public class GameWindow extends JFrame implements
 
 	public void gameOver() {
 		// not sure if to make game over or not
+	}
+
+	public void attack() {
+		player.attack(currTarget);
+
+		for (Enemy enemy : enemies) {
+			enemy.act();
+		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+		String command = e.getActionCommand();
+
+		/* if (command.equals(CM.getAString())) {
+			attack();
+		}
+
+		if (command.equals(CM.getItemString())) {
+			attack();
+		}
+
+		if (command.equals(CM.getFleeString())) {
+			attack();
+		} */
 	}
 
 }

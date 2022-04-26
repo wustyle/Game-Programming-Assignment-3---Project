@@ -25,6 +25,12 @@ public class Player {
 
    private Image playerImage, playerLeftImage, playerRightImage;
 
+   private Anim curr_Animation;
+   private Anim idle_animation;
+   private Anim walk_animation;
+   private Anim die_Animation;
+   private Anim atk_animation;
+   private Anim hurt_animation;
 
 
 
@@ -49,11 +55,16 @@ public class Player {
       lvl = 0;
       lvlUp();
 
+
+      idle_animation = loadAnimation("images/player/Warrior-V1.3/Warrior/Individual Sprite/idle/Warrior_Idle_",6);
+      walk_animation = loadAnimation("images/player/Warrior-V1.3/Warrior/Individual Sprite/Run/Warrior_Run_", 8);
+      curr_Animation = idle_animation;
    }
 
 
    public void draw (Graphics2D g2) {
-	   g2.drawImage (playerImage, x, y, XSIZE, YSIZE, null);
+	   //g2.drawImage (playerImage, x, y, XSIZE, YSIZE, null);
+      curr_Animation.draw(g2, x, y);
    }
 
 
@@ -88,7 +99,9 @@ public class Player {
 
       if (!window.isVisible ()) return;
 
-      playerImage = playerRightImage;
+      //playerImage = playerRightImage;
+
+      curr_Animation = walk_animation;
 
       dimension = window.getSize();
 
@@ -220,6 +233,44 @@ public class Player {
 
    public void setHp(int hp) {
        this.hp = hp;
+   }
+
+
+
+
+
+
+
+
+
+   //Stuff for animation
+
+   public Anim loadAnimation(String dir, int frames) {
+      // load images for wild cat animation
+		
+		String prefix = dir;
+		String suffix = ".png";
+
+		Anim animation = new Anim((GameWindow) window);
+
+      String fullPath;
+
+		for (int i=1; i<=frames; i++) {
+			
+            
+         
+         fullPath = prefix + i + suffix;
+         
+            
+			Image animImage = ImageManager.loadImage(fullPath);
+			animation.addFrame(animImage, 100);
+		}
+
+      return animation;
+   }
+
+   public void update_Anim() {
+      curr_Animation.update();
    }
 
 }
