@@ -9,6 +9,7 @@
 */
 
 import java.awt.Graphics2D;
+import java.awt.Dimension;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -20,7 +21,13 @@ import java.awt.Color;
 
 public class NPC {
 
-    private Animation animation;
+    private Anim curr_Animation;
+    private Anim idle_Animation;
+    private Anim left_Animation;
+    private Anim right_Animation;
+    private Anim up_Animation;
+    private Anim down_Animation;
+
 
     private int x;
     private int y;
@@ -30,6 +37,8 @@ public class NPC {
 
     private String name;
 
+    private int anim_stop_counter;
+    private int anim_stop_condition;
 
     public NPC (JFrame w, Player p, int X, int Y)
     {
@@ -39,15 +48,19 @@ public class NPC {
         this.window = (GameWindow) w;
         this.player= p;
 
-        animation = new Animation(w);
+        down_Animation = loadAnimation("images/NPC/tile", 3, 54);
+        left_Animation = loadAnimation("images/NPC/tile", 3, 66);
+        right_Animation = loadAnimation("images/NPC/tile", 3, 78);
+        up_Animation = loadAnimation("images/NPC/tile", 3, 90);
+        //idle_Animation = loadAnimation("images/NPC/tile", 3, 21);
 
-        loadAnimation();
+        // loadAnimation();
 
-        animation.setLocation(X, Y);
+        
     }
     
     public void draw (Graphics2D g2) {
-        animation.draw(g2);
+        //animation.draw(g2);
 
         Font f = new Font ("Calibri", Font.ITALIC, 14);
          g2.setFont (f);
@@ -59,15 +72,17 @@ public class NPC {
     public void act() {
         Random rand = new Random();
 
-        int i = rand.nextInt(3);
+        int i = rand.nextInt(5);
 
         if (i == 1) {
-            
+            moveDown();
         }
         else if (i == 2) {
-            
+            moveLeft();
+        } else if (i == 3) {
+            moveRight();
         } else {
-            
+            moveUp();
         }
     }
 
@@ -85,68 +100,108 @@ public class NPC {
 
 
 
+    private void moveLeft () {
+        if (!window.isVisible ()) return;
+  
+        curr_Animation = left_Animation;
+        anim_stop_counter = 1;
+        anim_stop_condition = 3; 
 
+        if ((x - 10) > 0)
+              x = x - 10;
+     }
+
+     private void moveRight () {
+        Dimension dimension;
+  
+        if (!window.isVisible ()) return;
+        curr_Animation = right_Animation;
+        anim_stop_counter = 1;
+        anim_stop_condition = 3; 
+  
+        dimension = window.getSize();
+  
+        if ((x + 60) < dimension.getWidth())
+              x = x + 10;
+  
+        // check if x is outside the right side of the tile map.
+  
+     }
+
+     public void moveUp () {
+  
+        if (!window.isVisible ()) return;
+  
+        curr_Animation = up_Animation;
+        anim_stop_counter = 1;
+        anim_stop_condition = 3; 
+
+        if ((y - 10) > 0)
+              y = y - 10;
+     }
+
+     public void moveDown () {
+        Dimension dimension;
+  
+        if (!window.isVisible ()) return;
+
+        curr_Animation = down_Animation;
+        anim_stop_counter = 1;
+        anim_stop_condition = 3; 
+  
+        dimension = window.getSize();
+  
+        if ((y + 60) < dimension.getHeight())
+              y = y + 10;
+
+     }
 
 
     // Anim related stuff
-    public void loadAnimation() {
+    
 
-        Random rand = new Random();
-
-        //int i = rand.nextInt(5);
-
-        int i = 1;// for testing purposes
-
-        if (i == 1) {
-
-            setName(i);
-
-            Image animImage1 = loadImage("images/bird1.png");
-            Image animImage2 = loadImage("images/bird2.png");
-            Image animImage3 = loadImage("images/bird3.png");
-            Image animImage4 = loadImage("images/bird4.png");
-            Image animImage5 = loadImage("images/bird5.png");
-            Image animImage6 = loadImage("images/bird6.png");
-            Image animImage7 = loadImage("images/bird7.png");
-            Image animImage8 = loadImage("images/bird8.png");
-            Image animImage9 = loadImage("images/bird9.png");
-
-            // create animation object and insert frames
-
-            animation = new Animation(window);
-
-            animation.addFrame(animImage1, 200);
-            animation.addFrame(animImage2, 200);
-            animation.addFrame(animImage3, 200);
-            animation.addFrame(animImage4, 200);
-            animation.addFrame(animImage5, 200);
-            animation.addFrame(animImage6, 200);
-            animation.addFrame(animImage7, 200);		
-            animation.addFrame(animImage8, 200);
-            animation.addFrame(animImage9, 200);
+    public Anim loadAnimation(String dir, int frames, int offset) {
+        // load images for wild cat animation
+          
+          String prefix = dir;
+          String suffix = ".png";
+  
+          Anim animation = new Anim((GameWindow) window);
+  
+        String fullPath;
+  
+          for (int i=offset; i<=frames + offset; i++) {
+              if(i < 10){
+              fullPath = prefix + "00" + i + suffix;
+           }
+              
+           else if(i < 100){
+              fullPath = prefix + "0" + i + suffix;
+           }
+            else {
+              fullPath = prefix + i + suffix;
+  
+            }  
+           
+           
+              
+              Image animImage = ImageManager.loadImage(fullPath);
+              animation.addFrame(animImage, 100);
+          }
+  
+        return animation;
+     }
+  
+     public void update_Anim() {
+  
+        anim_stop_counter++;
+  
+        if (anim_stop_condition <= anim_stop_counter) {
+           act();
         }
-        else if (i == 2) {
-            
-        } 
-        else if (i == 3) {
-            
-        } 
-        else if (i == 4) {
-            
-        } 
-        else {
-            
-        }
-		
-	}
-
-    public Image loadImage (String fileName) {
-		return new ImageIcon(fileName).getImage();
-	}
-
-    public void update_Anim() {
-        animation.update();
-    }
+        else
+           curr_Animation.update();
+     } 
 
 
 

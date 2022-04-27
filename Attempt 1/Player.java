@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -6,6 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.JFrame;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import java.awt.Font;
+
 
 public class Player {
 
@@ -27,18 +30,24 @@ public class Player {
 
    private Anim curr_Animation;
    private Anim idle_animation;
-   private Anim walk_animation;
+   private Anim walk_left_animation;
+   private Anim walk_up_animation;
+   private Anim walk_down_animation;
+   private Anim walk_right_animation;
    private Anim die_Animation;
    private Anim atk_animation;
    private Anim hurt_animation;
 
-
+   private int anim_stop_condition;
+   private int anim_stop_counter;
 
    // Combat related stuff
    private int lvl;
    private int hp;
    private int dmg;
    private Equipment weapon;
+
+   private String action;
 
    public Player (JFrame window) {
       this.window = window;
@@ -55,16 +64,34 @@ public class Player {
       lvl = 0;
       lvlUp();
 
+      action = "";
 
-      idle_animation = loadAnimation("images/player/Warrior-V1.3/Warrior/Individual Sprite/idle/Warrior_Idle_",6);
-      walk_animation = loadAnimation("images/player/Warrior-V1.3/Warrior/Individual Sprite/Run/Warrior_Run_", 8);
+      idle_animation = loadAnimation("images/NPC/tile", 3, 9);
+      walk_right_animation = loadAnimation("images/NPC/tile", 3, 33);
+      walk_down_animation = loadAnimation("images/NPC/tile", 3, 9);
+      walk_left_animation = loadAnimation("images/NPC/tile", 3, 21);
+      walk_up_animation = loadAnimation("images/NPC/tile", 3, 45);
+      //die_Animation = loadAnimation("images/player/sailorMain/tile", 11);
+      atk_animation = loadAnimation("images/player/sailorMain/tile", 5, 122);
+      //hurt_animation = loadAnimation("images/player/sailorMain/tile", 4);
       curr_Animation = idle_animation;
-   }
 
+      anim_stop_counter = 1;
+      anim_stop_condition = 12;
+   }
 
    public void draw (Graphics2D g2) {
 	   //g2.drawImage (playerImage, x, y, XSIZE, YSIZE, null);
       curr_Animation.draw(g2, x, y);
+
+      Font f = new Font ("Calibri", Font.ITALIC, 14);
+         g2.setFont (f);
+         g2.setColor(Color.BLACK);
+         g2.drawString(action, 20 + x,  y - 35 );
+
+         g2.drawString("Lost Girl", 20 + x,  y - 25 );
+
+         g2.drawString("" + hp, 25 + x,  y - 15 );
    }
 
 
@@ -82,8 +109,10 @@ public class Player {
       Dimension dimension;
 
       if (!window.isVisible ()) return;
-
-      playerImage = playerLeftImage;
+      
+      curr_Animation = walk_left_animation;
+      anim_stop_counter = 1;
+      anim_stop_condition = 10;
 
       dimension = window.getSize();
 
@@ -101,7 +130,9 @@ public class Player {
 
       //playerImage = playerRightImage;
 
-      curr_Animation = walk_animation;
+      curr_Animation = walk_right_animation;
+      anim_stop_counter = 1;
+      anim_stop_condition = 10;
 
       dimension = window.getSize();
 
@@ -116,8 +147,10 @@ public class Player {
       Dimension dimension;
 
       if (!window.isVisible ()) return;
-
-      playerImage = playerLeftImage;
+      
+      curr_Animation = walk_up_animation;
+      anim_stop_counter = 1;
+      anim_stop_condition = 12;
 
       dimension = window.getSize();
 
@@ -133,7 +166,9 @@ public class Player {
 
       if (!window.isVisible ()) return;
 
-      playerImage = playerRightImage; // we need a player down image
+      curr_Animation = walk_down_animation;
+      anim_stop_counter = 1;
+      anim_stop_condition = 10;
 
       dimension = window.getSize();
 
@@ -218,6 +253,10 @@ public class Player {
    }
 
    public void attack(Enemy target) {
+      action = "Attack";
+      curr_Animation = atk_animation;
+      anim_stop_counter = 1;
+      anim_stop_condition = 12;
       int enemyHP = target.getHP() - dmg;
 
       if (enemyHP <= 0) {
@@ -227,12 +266,26 @@ public class Player {
       }
    }
 
+   public void drinkPotion() {
+      action = "Drinks potion. You are healed to full health!";
+      
+      hp = lvl * 5;
+   }
+
    public int getHp() {
        return hp;
    }
 
    public void setHp(int hp) {
        this.hp = hp;
+
+       if (this.hp <= 0) {
+          action = "Lose";
+       }
+   }
+
+   public int getLVL() {
+      return lvl;
    }
 
 
@@ -245,7 +298,7 @@ public class Player {
 
    //Stuff for animation
 
-   public Anim loadAnimation(String dir, int frames) {
+   public Anim loadAnimation(String dir, int frames, int offset) {
       // load images for wild cat animation
 		
 		String prefix = dir;
@@ -255,11 +308,19 @@ public class Player {
 
       String fullPath;
 
-		for (int i=1; i<=frames; i++) {
-			
+		for (int i=offset; i<=frames + offset; i++) {
+			if(i < 10){
+            fullPath = prefix + "00" + i + suffix;
+         }
             
+         else if(i < 100){
+            fullPath = prefix + "0" + i + suffix;
+         }
+          else {
+            fullPath = prefix + i + suffix;
+
+          }  
          
-         fullPath = prefix + i + suffix;
          
             
 			Image animImage = ImageManager.loadImage(fullPath);
@@ -270,7 +331,16 @@ public class Player {
    }
 
    public void update_Anim() {
-      curr_Animation.update();
+
+      anim_stop_counter++;
+
+      if (anim_stop_condition <= anim_stop_counter) {
+         anim_stop_counter = 1;
+         curr_Animation = idle_animation;
+         anim_stop_condition = 7;
+      }
+      else
+         curr_Animation.update();
    }
 
 }

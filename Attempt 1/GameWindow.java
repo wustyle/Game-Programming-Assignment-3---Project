@@ -65,10 +65,12 @@ public class GameWindow extends JFrame implements
 
 	private boolean isCombat;
 	private boolean isChap2;
+	private boolean isGameOver;
 
 	private Player player;
 
 	private ArrayList<Enemy> enemies; 
+	private ArrayList<Item> items; 
 	private Enemy currTarget;
 
 	private CombatMenu CM;
@@ -104,6 +106,7 @@ public class GameWindow extends JFrame implements
 
 		isCombat = false;
 		isChap2  = false;
+		isGameOver = false;
 
 		player = new Player(this);
 
@@ -250,6 +253,11 @@ public class GameWindow extends JFrame implements
 
 	public void gameRender (Graphics gScr) {		// draw the game objects
 
+		if (isGameOver) {
+			combatMap(gScr);
+			//not sure what to do when game over
+		} 
+		else
 		if (isCombat) {
 			combatMap(gScr);
 		} 
@@ -763,7 +771,7 @@ public class GameWindow extends JFrame implements
 
 			isCombat = true;
 
-
+			items = new ArrayList<>();
 		}
 		else 
 		if (keyCode == KeyEvent.VK_N && !isChap2) {
@@ -786,6 +794,14 @@ public class GameWindow extends JFrame implements
 				CM.setVisible(true);
 				//isInventoryVisible = true;
 			}
+		}
+		else 
+		if (keyCode == KeyEvent.VK_F && isCombat) {
+			flee();
+		}
+		else 
+		if (keyCode == KeyEvent.VK_H && isCombat) {
+			player.drinkPotion();
 		}
 	}
 
@@ -946,15 +962,20 @@ public class GameWindow extends JFrame implements
 		
 	}
 
-	public void gameOver() {
-		// not sure if to make game over or not
-	}
 
 	public void attack() {
 		player.attack(currTarget);
 
 		for (Enemy enemy : enemies) {
 			enemy.act();
+		}
+	}
+
+	public void flee() {
+		
+
+		for (Enemy enemy : enemies) {
+			removeEnemy(enemy);
 		}
 	}
 
@@ -975,6 +996,14 @@ public class GameWindow extends JFrame implements
 		if (command.equals(CM.getFleeString())) {
 			attack();
 		} */
+	}
+
+	public void gameOver() {
+		isGameOver = true;
+	}
+
+	public void addLoot(Item i){
+		items.add(i);
 	}
 
 }

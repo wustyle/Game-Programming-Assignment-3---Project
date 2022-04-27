@@ -30,6 +30,8 @@ public class Enemy {
 
     private String lootTable[];
 
+    private Image animImage1;
+
 
     //Combat related stats
     private String name;
@@ -37,6 +39,8 @@ public class Enemy {
     
     private int HP;
     private int dmg;
+
+    private String action;
 
     public Enemy (JFrame w, Player p, int X, int Y)
     {
@@ -51,14 +55,40 @@ public class Enemy {
         loadAnimation();
 
         animation.setLocation(X, Y);
+
+        action = "";
+
+        if (name == "charmander") {
+            LVL = player.getLVL() + 2;
+            
+            HP = LVL * 5;
+
+            dmg = LVL * 2;
+
+            animImage1 = loadImage("images/enemies/charmander.png");
+        }
+
+        if (name == "Charizard!!!") {
+            LVL = player.getLVL() + 2;
+            
+            HP = LVL * 25;
+
+            dmg = LVL * 4;
+
+            animImage1 = loadImage("images/enemies/charizard.jpg");
+
+        }
+        
     }
     
     public void draw (Graphics2D g2) {
-        animation.draw(g2);
+        g2.drawImage(animImage1, x, y, 150, 150, null);
 
         Font f = new Font ("Calibri", Font.ITALIC, 14);
          g2.setFont (f);
          g2.setColor(Color.WHITE);
+         g2.drawString(action, 20 + x,  y - 35 );
+
          g2.drawString(name, 20 + x,  y - 25 );
 
          g2.drawString("" + HP, 25 + x,  y - 15 );
@@ -70,12 +100,12 @@ public class Enemy {
         int i = rand.nextInt(3);
 
         if (i == 1) {
-            
+            attack();
         }
         else if (i == 2) {
-            
+            action = "Roars with beastial vigor!!! so fierce lolol";
         } else {
-            
+            action = "Chases his tail, he's almost too cute to kill... Almost!";
         }
     }
 
@@ -88,13 +118,18 @@ public class Enemy {
     }
 
     public void attack() {
+        action = "Attack";
         int enemyHP = player.getHp() - dmg;
   
         if (enemyHP <= 0) {
-           window.gameOver();
+           //window.gameOver();
+           player.setHp(enemyHP);
+
         } else {
            player.setHp(enemyHP);
         }
+
+
      }
 
     public void die() {
@@ -102,9 +137,14 @@ public class Enemy {
 
         window.removeEnemy(this);
     }
+    public void die2() {
+        //loot();
+
+        window.removeEnemy(this);
+    }
 
     private void loot() {
-        
+        window.addLoot(new Item(""));
     }
 
     private void genLootTable(int i) {

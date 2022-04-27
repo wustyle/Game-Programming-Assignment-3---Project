@@ -30,8 +30,9 @@ public class BackgroundManager {
      						// a move amount of 0 makes a background stationary
 
 	// testing a new big bg
-	private String bgImages[] = {"images/BG's/8.jpg"};
+	private String bgImages[] = {"images/BG's/al1.jpg"};
 	private String bgImagesC2[] = {"images/BG's/10.jpg"};
+	private String bgImagesCombat[] = {"images/BG's/10.jpg"};
 
 
 	private int moveAmount[] = {50};
