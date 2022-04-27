@@ -13,6 +13,8 @@ import java.awt.Dimension;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+
+import java.util.ArrayList;
 import java.util.Random;
 import java.awt.Image;
 import java.awt.Font;
@@ -40,19 +42,64 @@ public class NPC {
     private int anim_stop_counter;
     private int anim_stop_condition;
 
-    public NPC (JFrame w, Player p, int X, int Y)
+    ArrayList<String> lines;
+
+    public NPC (JFrame w, Player p, int X, int Y, String n)
     {
+        name = n;
         x = X;
         y = Y;
 
         this.window = (GameWindow) w;
         this.player= p;
 
-        down_Animation = loadAnimation("images/NPC/tile", 3, 54);
-        left_Animation = loadAnimation("images/NPC/tile", 3, 66);
-        right_Animation = loadAnimation("images/NPC/tile", 3, 78);
-        up_Animation = loadAnimation("images/NPC/tile", 3, 90);
-        //idle_Animation = loadAnimation("images/NPC/tile", 3, 21);
+        lines = new ArrayList<>();
+
+        if(name == "Jon"){
+            down_Animation = loadAnimation("images/NPC/tile", 3, 48);
+            left_Animation = loadAnimation("images/NPC/tile", 3, 60);
+            right_Animation = loadAnimation("images/NPC/tile", 3, 72);
+            up_Animation = loadAnimation("images/NPC/tile", 3, 84);
+            //idle_Animation = loadAnimation("images/NPC/tile", 3, 21);
+
+            lines.add("Seems like you're new here missy! The name's Jon!");
+            lines.add("I'm Lillia. Where am  I?");
+            lines.add("You're in Ravenhome! A small village on the outside of the Forbidden Forest.");
+            lines.add("Ravenhome? But I'm from St. Petersville.");
+            lines.add("Haven't heard of there, honey. And you surely don't look like from here.");
+            lines.add("How do I get of Ravenhome?");
+            lines.add("The only way out of here, sweetie, is through the Forbidden Forest. But no one ever leaves here, it's too dangerous to pass through.");
+            lines.add("I have no choice, I must get back home.");
+            lines.add("Well, good luck but you will need some weapons if you want to get through the forest alive. Talk to Layla, she's the village chief. She can help you.");
+            lines.add("Thanks, Jon.");
+        }
+        else if (name == "Layla - Village Chief") {
+            down_Animation = loadAnimation("images/NPC/tile", 3, 54);
+            left_Animation = loadAnimation("images/NPC/tile", 3, 66);
+            right_Animation = loadAnimation("images/NPC/tile", 3, 78);
+            up_Animation = loadAnimation("images/NPC/tile", 3, 90);
+            //idle_Animation = loadAnimation("images/NPC/tile", 3, 21);
+
+            lines.add("Hello, I'm Lillia, I need to go through the Forbidden Forest to go back home. Can you help me?");
+            lines.add("The Forbidden Forest? That's quite a scary place for a tiny person like you.");
+            lines.add("Please, I don't belong here. My parents must be worried about me.");
+            lines.add("Okay little one, I shall give you weapons and items that can assist you through the forest, but you must be careful, there are dangerous monsters that can pop up out of nowhere.");
+            lines.add("Thank you, village chief.");
+            lines.add("Press 'SHIFT' to attack.");
+
+        } else if(name == "Zeke - Forest guard"){
+            down_Animation = loadAnimation("images/NPC/tile", 3, 0);
+            left_Animation = loadAnimation("images/NPC/tile", 3, 12);
+            right_Animation = loadAnimation("images/NPC/tile", 3, 24);
+            up_Animation = loadAnimation("images/NPC/tile", 3, 36);
+            //idle_Animation = loadAnimation("images/NPC/tile", 3, 21);
+
+            lines.add("You're going into the forest? Be careful in there. Stock up on potions by killing enemies.");
+            lines.add("Thank you!");
+
+        }
+
+        
 
         // loadAnimation();
 
