@@ -3,11 +3,16 @@ import java.awt.Dimension;
 import java.awt.Image;
 import javax.swing.JFrame;
 import javax.swing.ImageIcon;
+import java.awt.Component.*;
+
+
 
 public class Background {
   	private Image bgImage;
   	private int bgImageWidth;      		// width of the background (>= panel Width)
 	private int bgImageHeight;      		// width of the background (>= panel Width)
+	private int bgImageWidthCM;      		// width of the background (>= panel Width)
+	private int bgImageHeightCM;      		// width of the background (>= panel Width)
 
 	private JFrame window;
 	private Dimension dimension;
@@ -29,9 +34,10 @@ public class Background {
     
 	this.window = window;
 	this.bgImage = loadImage(imageFile);
-	//bgImageWidth = bgImage.getWidth(null);	// get width of the background
-	//bgImageHeight = bgImage.getHeight(null);
-
+	//bgImageWidthCM = bgImage.getWidth(null);	// get width of the background
+	//bgImageHeightCM = bgImage.getHeight(null);
+	
+	
 	bgImageWidth = 2500;
 	bgImageHeight = 2500;
 
@@ -179,6 +185,12 @@ public class Background {
 	//g2.drawImage(bgImage, backgroundX, backgroundY, null);
 	//g2.drawImage(bgImage, backgroundX2, backgroundY2, null);
 	g2.drawImage(bgImage, backgroundX, backgroundY, 2500, 2500, null);
+  }
+
+  public void drawCM (Graphics2D g2) {
+	//g2.drawImage(bgImage, backgroundX, backgroundY, null);
+	//g2.drawImage(bgImage, backgroundX2, backgroundY2, null);
+	g2.drawImage(bgImage, backgroundX, backgroundY, screenWidth, screenHeight, null);
   }
 
 

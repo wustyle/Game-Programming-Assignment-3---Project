@@ -581,10 +581,7 @@ public class GameWindow extends JFrame implements
 		else
 			g.setColor(Color.RED);	
 
-		if (isPaused && !isStopped)
-			g.drawString("Attack", pauseButtonArea.x+45, pauseButtonArea.y+25);
-		else
-			g.drawString("Heal", pauseButtonArea.x+55, pauseButtonArea.y+25);
+			g.drawString(" Attack", pauseButtonArea.x+45, pauseButtonArea.y+25);
 
 		// draw the stop 'button'
 
@@ -598,7 +595,7 @@ public class GameWindow extends JFrame implements
 			g.setColor(Color.RED);
 
 		
-			g.drawString("Flee", stopButtonArea.x+40, stopButtonArea.y+25);
+			g.drawString("   Heal", stopButtonArea.x+40, stopButtonArea.y+25);
 
 		// draw the show animation 'button'
 
@@ -610,11 +607,11 @@ public class GameWindow extends JFrame implements
 			g.setColor(Color.WHITE);
 		else
 			g.setColor(Color.RED);
-      		g.drawString("Start Anim", showAnimButtonArea.x+35, showAnimButtonArea.y+25);
+      		g.drawString("     Flee", showAnimButtonArea.x+35, showAnimButtonArea.y+25);
 
 		// draw the pause anim 'button'
 
-		g.setColor(Color.BLACK);
+		/*g.setColor(Color.BLACK);
 		g.drawOval(pauseAnimButtonArea.x, pauseAnimButtonArea.y, 
 			   pauseAnimButtonArea.width, pauseAnimButtonArea.height);
 
@@ -623,10 +620,10 @@ public class GameWindow extends JFrame implements
 		else
 			g.setColor(Color.RED);
 
-		if (isAnimShown && isAnimPaused && !isStopped)
+		 if (isAnimShown && isAnimPaused && !isStopped)
 			g.drawString("Anim Paused", pauseAnimButtonArea.x+30, pauseAnimButtonArea.y+25);
 		else
-			g.drawString("Pause Anim", pauseAnimButtonArea.x+35, pauseAnimButtonArea.y+25);
+			g.drawString("Pause Anim", pauseAnimButtonArea.x+35, pauseAnimButtonArea.y+25); 
 
 		// draw the quit button (an actual image that changes when the mouse moves over it)
 
@@ -635,7 +632,7 @@ public class GameWindow extends JFrame implements
 		    	       //quitButtonArea.width, quitButtonArea.height, null);
 				
 		//else
-		//   g.drawImage(quit2Image, quitButtonArea.x, quitButtonArea.y, 180, 50, null);
+		//   g.drawImage(quit2Image, quitButtonArea.x, quitButtonArea.y, 180, 50, null);*/
 		    	       //quitButtonArea.width, quitButtonArea.height, null);
 /*
 		g.setColor(Color.BLACK);
@@ -722,6 +719,8 @@ public class GameWindow extends JFrame implements
 			}
 			bgManager.moveLeft();
 			player.moveLeft();
+
+			randomCombat();
 		}
 		else
 		if (keyCode == KeyEvent.VK_RIGHT) {
@@ -730,6 +729,8 @@ public class GameWindow extends JFrame implements
 			}
 			bgManager.moveRight();
 			player.moveRight();
+			
+			randomCombat();
 		}
 		else
 		if (keyCode == KeyEvent.VK_UP) {
@@ -738,6 +739,8 @@ public class GameWindow extends JFrame implements
 			}
 			bgManager.moveUp();
 			player.moveUp();
+			
+			randomCombat();
 		}
 		else
 		if (keyCode == KeyEvent.VK_DOWN) {
@@ -746,6 +749,8 @@ public class GameWindow extends JFrame implements
 			}
 			bgManager.moveDown();
 			player.moveDown();
+			
+			randomCombat();
 		}
 		else
 		if (keyCode == KeyEvent.VK_I) {
@@ -763,16 +768,7 @@ public class GameWindow extends JFrame implements
 		}
 		else 
 		if (keyCode == KeyEvent.VK_C && !isCombat) {
-			player.setX(300);
-			player.setY(400);
-
-			spawnEnemies();
-
-			CM.setVisible(true);
-
-			isCombat = true;
-
-			items = new ArrayList<>();
+			enterCombat();
 		}
 		else 
 		if (keyCode == KeyEvent.VK_N && !isChap2) {
@@ -866,20 +862,17 @@ public class GameWindow extends JFrame implements
 			return;
 
 		if (isOverStopButton) {			// mouse click on Stop button
-			isStopped = true;
-			isPaused = false;
+			player.drinkPotion();
 		}
 		else
 		if (isOverPauseButton) {		// mouse click on Pause button
-			isPaused = !isPaused;     	// toggle pausing
+			attack();    	// toggle pausing
 		}
 		else 
 		if (isOverShowAnimButton && !isPaused) {// mouse click on Start Anim button
-			isAnimShown = true;
-		 	isAnimPaused = false;
-			animation.start();
+			flee();
 		}
-		else
+		/* else
 		if (isOverPauseAnimButton) {		// mouse click on Pause Anim button
 			if (isAnimPaused) {
 				isAnimPaused = false;
@@ -892,7 +885,7 @@ public class GameWindow extends JFrame implements
 		}
 		else if (isOverQuitButton) {		// mouse click on Quit button
 			isRunning = false;		// set running to false to terminate
-		}
+		} */
   	}
 
 
@@ -1005,6 +998,29 @@ public class GameWindow extends JFrame implements
 
 	public void addLoot(Item i){
 		items.add(i);
+	}
+
+	private void enterCombat(){
+		player.setX(300);
+		player.setY(400);
+
+		spawnEnemies();
+
+		CM.setVisible(true);
+
+		isCombat = true;
+
+		items = new ArrayList<>();
+	}
+
+	private void randomCombat() {
+		Random rand = new Random();
+
+		int i = rand.nextInt(3);
+
+		if (i == 1) {
+			enterCombat();
+		}
 	}
 
 }
