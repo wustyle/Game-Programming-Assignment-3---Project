@@ -7,7 +7,7 @@ import javax.swing.ImageIcon;
  */
 public class Item {
 
-    private String name;
+    protected String name;
     private Image image;
     private ImageIcon icon;
 
@@ -20,6 +20,11 @@ public class Item {
     private void setImage() {
         if (name == "") {
             icon = new ImageIcon("images/items/PNG/Background/Icon1.png");
+            image = icon.getImage();
+            
+        }
+        else if (name == "sword") {
+            icon = new ImageIcon("images/weapons icons/noglow/tile000.png");
             image = icon.getImage();
             
         }

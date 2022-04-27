@@ -330,6 +330,31 @@ public class Player {
       return animation;
    }
 
+   public Anim loadAnimation2(String dir, int frames) {
+      // load images for wild cat animation
+		
+		String prefix = dir;
+		String suffix = ".png";
+
+		Anim animation = new Anim((GameWindow) window);
+
+      String fullPath;
+
+		for (int i=1; i<=frames; i++) {
+			
+            fullPath = prefix + i + suffix;
+
+         
+         
+         
+            
+			Image animImage = ImageManager.loadImage(fullPath);
+			animation.addFrame(animImage, 100);
+		}
+
+      return animation;
+   }
+
    public void update_Anim() {
 
       anim_stop_counter++;
@@ -337,7 +362,7 @@ public class Player {
       if (anim_stop_condition <= anim_stop_counter) {
          anim_stop_counter = 1;
          curr_Animation = idle_animation;
-         anim_stop_condition = 7;
+         anim_stop_condition = 3;
       }
       else
          curr_Animation.update();
