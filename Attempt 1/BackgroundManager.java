@@ -30,12 +30,12 @@ public class BackgroundManager {
      						// a move amount of 0 makes a background stationary
 
 	// testing a new big bg
-	private String bgImages[] = {"images/BG's/al1.jpg"};
+	private String bgImages[] = {"images/BG's/al2.jpg"};
 	private String bgImagesC2[] = {"images/BG's/10.jpg"};
 	private String bgImagesCombat[] = {"images/BG's/10.jpg"};
 
 
-	private int moveAmount[] = {50};
+	private int moveAmount[] = {10};
 
   	private Background[] backgrounds;
 	private Background[] backgroundsC2;
@@ -110,6 +110,11 @@ public class BackgroundManager {
   	}
 
 	public void drawC2 (Graphics2D g2) { 
+		for (int i=0; i < numBackgroundsC2; i++)
+      			backgroundsC2[i].draw(g2);
+  	}
+
+	  public void drawCM (Graphics2D g2) { 
 		for (int i=0; i < numBackgroundsC2; i++)
       			backgroundsC2[i].draw(g2);
   	}
