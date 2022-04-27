@@ -29,8 +29,11 @@ public class Background {
     
 	this.window = window;
 	this.bgImage = loadImage(imageFile);
-	bgImageWidth = bgImage.getWidth(null);	// get width of the background
-	bgImageHeight = bgImage.getHeight(null);
+	//bgImageWidth = bgImage.getWidth(null);	// get width of the background
+	//bgImageHeight = bgImage.getHeight(null);
+
+	bgImageWidth = 2500;
+	bgImageHeight = 2500;
 
 	System.out.println ("bgImageWidth = " + bgImageWidth);
 	System.out.println ("bgImageHeight = " + bgImageHeight);
@@ -173,8 +176,9 @@ public class Background {
  
 
   public void draw (Graphics2D g2) {
-	g2.drawImage(bgImage, backgroundX, backgroundY, null);
+	//g2.drawImage(bgImage, backgroundX, backgroundY, null);
 	//g2.drawImage(bgImage, backgroundX2, backgroundY2, null);
+	g2.drawImage(bgImage, backgroundX, backgroundY, 2500, 2500, null);
   }
 
 

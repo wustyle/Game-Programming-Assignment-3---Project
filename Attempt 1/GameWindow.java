@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.awt.event.*;
 import java.awt.image.BufferStrategy;	// need this to implement page flipping
 import java.util.Random;
+import java.awt.geom.Rectangle2D;
 
 
 public class GameWindow extends JFrame implements
@@ -254,7 +255,7 @@ public class GameWindow extends JFrame implements
 	public void gameRender (Graphics gScr) {		// draw the game objects
 
 		if (isGameOver) {
-			combatMap(gScr);
+			GameOver(gScr);
 			//not sure what to do when game over
 		} 
 		else
@@ -308,7 +309,7 @@ public class GameWindow extends JFrame implements
 		//imageEffect.draw(imageContext);			// draw the image effect
 
 		//Graphics2D g2 = (Graphics2D) getGraphics();	// get the graphics context for window
-		drawButtons(imageContext);			// draw the buttons
+		//drawButtons(imageContext);			// draw the buttons
 
 		Graphics2D g2 = (Graphics2D) gScr;
 		g2.drawImage(image, 0, 0, pWidth, pHeight, null);
@@ -336,7 +337,7 @@ public class GameWindow extends JFrame implements
 		//imageEffect.draw(imageContext);			// draw the image effect
 
 		//Graphics2D g2 = (Graphics2D) getGraphics();	// get the graphics context for window
-		drawButtons(imageContext);			// draw the buttons
+		//drawButtons(imageContext);			// draw the buttons
 
 		Graphics2D g2 = (Graphics2D) gScr;
 		g2.drawImage(image, 0, 0, pWidth, pHeight, null);
@@ -353,7 +354,7 @@ public class GameWindow extends JFrame implements
 		//gameRenderTest(gScr);
 		Graphics2D imageContext = (Graphics2D) image.getGraphics();
 
-		bgManager.draw(imageContext);
+		bgManager.drawCM(imageContext);
 		player.draw(imageContext);
 
 		for (Enemy enemy : enemies) {
@@ -387,28 +388,30 @@ public class GameWindow extends JFrame implements
 		g2.dispose();
 	}
 
-	public void gameRenderTest (Graphics gScr) {		// draw the game objects
-
+	private void GameOver(Graphics gScr) {
+		//gameRenderTest(gScr);
 		Graphics2D imageContext = (Graphics2D) image.getGraphics();
 
-		//bgManager.draw(imageContext);
-		//tileMap.draw(imageContext);
-	
-		//if (isAnimShown)
-			//animation.draw(imageContext);		// draw the animation
-
-		//imageEffect.draw(imageContext);			// draw the image effect
-
-		//Graphics2D g2 = (Graphics2D) getGraphics();	// get the graphics context for window
-		//drawButtons(imageContext);			// draw the buttons
-
+		
+		
 		Graphics2D g2 = (Graphics2D) gScr;
 		g2.drawImage(image, 0, 0, pWidth, pHeight, null);
 
-		imageContext.dispose();
+		
+
+
+        g2.setColor(Color.black);
+        Rectangle2D.Double gameOver = new Rectangle2D.Double(0, 0, getBounds().width, getBounds().height);
+        g2.fill(gameOver);
+
+        Font f1 = new Font("Arial Black", Font.PLAIN, 70);
+        g2.setFont(f1);
+        g2.setColor(Color.yellow);
+        g2.drawString("GAME OVER", getBounds().width /20, getBounds().height/2);
+
+        imageContext.dispose();
 		g2.dispose();
 	}
-
 
 	private void initFullScreen() {				// standard procedure to get into FSEM
 
@@ -481,16 +484,16 @@ public class GameWindow extends JFrame implements
 		//  Buttons are placed at the top of the window.
 
 		int leftOffset = (pWidth - (5 * 150) - (4 * 20)) / 2;
-		pauseButtonArea = new Rectangle(leftOffset, 60, 150, 40);
+		pauseButtonArea = new Rectangle(leftOffset, getBounds().height -50, 150, 40);
 
 		leftOffset = leftOffset + 170;
-		stopButtonArea = new Rectangle(leftOffset, 60, 150, 40);
+		stopButtonArea = new Rectangle(leftOffset, getBounds().height -50, 150, 40);
 
 		leftOffset = leftOffset + 170;
-		showAnimButtonArea = new Rectangle(leftOffset, 60, 150, 40);
+		showAnimButtonArea = new Rectangle(leftOffset, getBounds().height -50, 150, 40);
 
 		leftOffset = leftOffset + 170;
-		pauseAnimButtonArea = new Rectangle(leftOffset, 60, 150, 40);
+		pauseAnimButtonArea = new Rectangle(leftOffset, getBounds().height -50, 150, 40);
 
 		leftOffset = leftOffset + 170;
 		int quitLength = quit1Image.getWidth(null);
@@ -579,9 +582,9 @@ public class GameWindow extends JFrame implements
 			g.setColor(Color.RED);	
 
 		if (isPaused && !isStopped)
-			g.drawString("Paused", pauseButtonArea.x+45, pauseButtonArea.y+25);
+			g.drawString("Attack", pauseButtonArea.x+45, pauseButtonArea.y+25);
 		else
-			g.drawString("Pause", pauseButtonArea.x+55, pauseButtonArea.y+25);
+			g.drawString("Heal", pauseButtonArea.x+55, pauseButtonArea.y+25);
 
 		// draw the stop 'button'
 
@@ -594,10 +597,8 @@ public class GameWindow extends JFrame implements
 		else
 			g.setColor(Color.RED);
 
-		if (isStopped)
-			g.drawString("Stopped", stopButtonArea.x+40, stopButtonArea.y+25);
-		else
-			g.drawString("Stop", stopButtonArea.x+60, stopButtonArea.y+25);
+		
+			g.drawString("Flee", stopButtonArea.x+40, stopButtonArea.y+25);
 
 		// draw the show animation 'button'
 
@@ -629,12 +630,12 @@ public class GameWindow extends JFrame implements
 
 		// draw the quit button (an actual image that changes when the mouse moves over it)
 
-		if (isOverQuitButton)
-		   g.drawImage(quit1Image, quitButtonArea.x, quitButtonArea.y, 180, 50, null);
+		//if (isOverQuitButton)
+		   //g.drawImage(quit1Image, quitButtonArea.x, quitButtonArea.y, 180, 50, null);
 		    	       //quitButtonArea.width, quitButtonArea.height, null);
 				
-		else
-		   g.drawImage(quit2Image, quitButtonArea.x, quitButtonArea.y, 180, 50, null);
+		//else
+		//   g.drawImage(quit2Image, quitButtonArea.x, quitButtonArea.y, 180, 50, null);
 		    	       //quitButtonArea.width, quitButtonArea.height, null);
 /*
 		g.setColor(Color.BLACK);

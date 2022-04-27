@@ -15,8 +15,8 @@ public class Player {
    private static final int XSIZE = 50;	// width of the player's sprite
    private static final int YSIZE = 50;	// height of the player's sprite			
 
-   private static final int DX = 12;	// amount of X pixels to move in one keystroke
-   private static final int DY = 50;	// amount of Y pixels to move in one keystroke
+   private static final int DX = 10;	// amount of X pixels to move in one keystroke
+   private static final int DY = 10;	// amount of Y pixels to move in one keystroke
 
    private JFrame window;		// reference to the JFrame on which player is drawn
 
@@ -281,6 +281,8 @@ public class Player {
 
        if (this.hp <= 0) {
           action = "Lose";
+          GameWindow g = (GameWindow) window;
+          g.gameOver();
        }
    }
 
@@ -308,7 +310,7 @@ public class Player {
 
       String fullPath;
 
-		for (int i=offset; i<=frames + offset; i++) {
+		for (int i=offset; i<frames + offset; i++) {
 			if(i < 10){
             fullPath = prefix + "00" + i + suffix;
          }

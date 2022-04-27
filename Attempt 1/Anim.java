@@ -117,7 +117,7 @@ public class Anim {
        //Graphics g = panel.getGraphics ();
        //Graphics2D g2 = (Graphics2D) g;
 
-       g2.drawImage(getImage(), x, y, 150, 150, null);
+       g2.drawImage(getImage(), x, y, 50, 50, null);
   
        //g2.dispose();
     }
@@ -127,7 +127,7 @@ public class Anim {
         //Graphics g = panel.getGraphics ();
         //Graphics2D g2 = (Graphics2D) g;
  
-        g2.drawImage(getImage(), x, y, 75, 75, null);
+        g2.drawImage(getImage(), x, y, 45, 45, null);
    
         //g2.dispose();
      }
