@@ -18,7 +18,7 @@ public class Item {
     }
 
     private void setImage() {
-        if (name == "") {
+        if (name == "potion") {
             icon = new ImageIcon("images/items/PNG/Background/Icon1.png");
             image = icon.getImage();
             
@@ -28,8 +28,8 @@ public class Item {
             image = icon.getImage();
             
         }
-        else if (name == "sword") {
-            icon = new ImageIcon("images/weapons icons/noglow/tile000.png");
+        else if (name == "shield") {
+            icon = new ImageIcon("images/weapons icons/noglow/tile049.png");
             image = icon.getImage();
             
         }
