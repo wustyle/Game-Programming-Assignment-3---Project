@@ -719,6 +719,8 @@ public class GameWindow extends JFrame implements
 			}
 			bgManager.moveLeft();
 			player.moveLeft();
+
+			randomCombat();
 		}
 		else
 		if (keyCode == KeyEvent.VK_RIGHT) {
@@ -727,6 +729,8 @@ public class GameWindow extends JFrame implements
 			}
 			bgManager.moveRight();
 			player.moveRight();
+			
+			randomCombat();
 		}
 		else
 		if (keyCode == KeyEvent.VK_UP) {
@@ -735,6 +739,8 @@ public class GameWindow extends JFrame implements
 			}
 			bgManager.moveUp();
 			player.moveUp();
+			
+			randomCombat();
 		}
 		else
 		if (keyCode == KeyEvent.VK_DOWN) {
@@ -743,6 +749,8 @@ public class GameWindow extends JFrame implements
 			}
 			bgManager.moveDown();
 			player.moveDown();
+			
+			randomCombat();
 		}
 		else
 		if (keyCode == KeyEvent.VK_I) {
@@ -760,16 +768,7 @@ public class GameWindow extends JFrame implements
 		}
 		else 
 		if (keyCode == KeyEvent.VK_C && !isCombat) {
-			player.setX(300);
-			player.setY(400);
-
-			spawnEnemies();
-
-			CM.setVisible(true);
-
-			isCombat = true;
-
-			items = new ArrayList<>();
+			enterCombat();
 		}
 		else 
 		if (keyCode == KeyEvent.VK_N && !isChap2) {
@@ -999,6 +998,29 @@ public class GameWindow extends JFrame implements
 
 	public void addLoot(Item i){
 		items.add(i);
+	}
+
+	private void enterCombat(){
+		player.setX(300);
+		player.setY(400);
+
+		spawnEnemies();
+
+		CM.setVisible(true);
+
+		isCombat = true;
+
+		items = new ArrayList<>();
+	}
+
+	private void randomCombat() {
+		Random rand = new Random();
+
+		int i = rand.nextInt(3);
+
+		if (i == 1) {
+			enterCombat();
+		}
 	}
 
 }

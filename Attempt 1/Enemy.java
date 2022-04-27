@@ -145,6 +145,8 @@ public class Enemy {
 
     private void loot() {
         window.addLoot(new Item(""));
+
+        player.lvlUp();
     }
 
     private void genLootTable(int i) {

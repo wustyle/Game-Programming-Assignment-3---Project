@@ -236,7 +236,7 @@ public class Player {
       return playerImage;
    }
 
-   private void lvlUp() {
+   public void lvlUp() {
       lvl++;
       hp = lvl * 5;
       dmg = (lvl * 2) + weapon.getAtk();
