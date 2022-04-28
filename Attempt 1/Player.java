@@ -57,17 +57,22 @@ public class Player {
    private String line;
    private Image chatBoxImage;
 
+   // Economy related stuff;
+
+   private int money;
 
    public Player (JFrame window) {
       this.window = window;
 
       chatBoxImage = ImageManager.loadImage ("images/dialogue-box-png.png");
 
+      playerLeftImage = loadImage("images/playerLeft.gif");
+      playerRightImage = loadImage("images/playerRight.gif");
 
       playerImage = playerRightImage;
 
       x = (int) ((window.getWidth() - playerRightImage.getWidth(null)) / 2);
-      y = (int) ((window.getHeight() - playerRightImage.getHeight(null)) / 2);;
+      y = (int) ((window.getHeight() - playerRightImage.getHeight(null)) / 2);
 
       weapon = new Equipment("sword");
       lvl = 0;
@@ -318,7 +323,9 @@ public class Player {
       return lvl;
    }
 
-
+   public void MoneyPlusPlus(int m) {
+       money += m;
+   }
 
 
 
