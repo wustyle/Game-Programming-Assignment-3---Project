@@ -256,6 +256,7 @@ public class GameWindow extends JFrame implements
 
 		if (isGameOver) {
 			GameOver(gScr);
+			soundManager.playSound("gameOver", false);
 			//not sure what to do when game over
 		} 
 		else
@@ -652,7 +653,7 @@ public class GameWindow extends JFrame implements
 
 	private void startGame() { 
 		if (gameThread == null) {
-			//soundManager.playSound ("background", true);
+			soundManager.playSound ("background", true);
 
 			bgManager = new BackgroundManager (this, 12);
 	
@@ -918,6 +919,8 @@ public class GameWindow extends JFrame implements
 			else 
 			{
 				isCombat = false;
+				soundManager.stopSound("combat");
+				soundManager.playSound("background", true);
 
 				
 			}
@@ -959,6 +962,7 @@ public class GameWindow extends JFrame implements
 
 	public void attack() {
 		player.attack(currTarget);
+		soundManager.playSound("attack", false);
 
 		for (Enemy enemy : enemies) {
 			enemy.act();
@@ -1001,6 +1005,8 @@ public class GameWindow extends JFrame implements
 	}
 
 	private void enterCombat(){
+		soundManager.stopSound("background");
+		soundManager.playSound("combat", true);
 		player.setX(300);
 		player.setY(400);
 
