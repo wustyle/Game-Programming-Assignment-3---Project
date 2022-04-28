@@ -42,7 +42,13 @@ public class NPC {
     private int anim_stop_counter;
     private int anim_stop_condition;
 
-    ArrayList<String> lines;
+    // Stuff for talking
+    private ArrayList<String> lines;
+    private int line;
+
+    private boolean isTalking;
+    private Image chatBoxImage;
+
 
     public NPC (JFrame w, Player p, int X, int Y, String n)
     {
@@ -54,6 +60,10 @@ public class NPC {
         this.player= p;
 
         lines = new ArrayList<>();
+        line = 0;
+        isTalking = false;
+        chatBoxImage = ImageManager.loadImage ("images/dialogue-box-png.png");
+
 
         if(name == "Jon"){
             down_Animation = loadAnimation("images/NPC/tile", 3, 48);
@@ -113,6 +123,22 @@ public class NPC {
          g2.setFont (f);
          g2.setColor(Color.WHITE);
          g2.drawString(name, 20 + x,  y - 25 );
+
+         if (isTalking) {
+            if (y <300) {
+               g2.drawImage(chatBoxImage, x - 5, y+90, 250, 150, null);
+            }
+            else {
+               g2.drawImage(chatBoxImage, x - 5, y-250, 250, 150, null);
+            }
+   
+   
+            g2.setFont (f);
+            g2.setColor(Color.WHITE);
+            g2.drawString("Lost Girl", 5 + x,  y - 45 );
+   
+            g2.drawString(lines.get(line), 5 + x,  y - 25 );
+         }
 
     }
 
@@ -250,9 +276,43 @@ public class NPC {
            curr_Animation.update();
      } 
 
+     public void talk() {
+         isTalking = true;
 
 
 
+     }
+
+     public void talkTarget() {
+
+      
+        if(!isTalking)
+        {
+           if (line >= lines.size()) {
+              line = 0;
+  
+              
+              
+           }
+  
+           player.setTalking(false);
+  
+           isTalking = true;
+        }
+        else {
+           player.setLine(lines.get(line + 1));
+  
+           player.setTalking(true);
+  
+           isTalking = false;
+  
+           line++;
+           line++;
+        }
+        
+  
+  
+     }
 
     
 
