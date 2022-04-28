@@ -131,19 +131,19 @@ public class NPC {
                g2.drawImage(chatBoxImage, x - 5, y+90, 250, 150, null);
                g2.setFont (f);
                g2.setColor(Color.WHITE);
-               g2.drawString(name, 5 + x,  y + 95 );
+               g2.drawString(name, 5 + x,  y + 145 );
       
-               g2.drawString(lines.get(line), 5 + x,  y + 110 );
+               g2.drawString(lines.get(line), 5 + x,  y + 160 );
 
             }
             else {
-               g2.drawImage(chatBoxImage, x - 5, y-250, 250, 150, null);
+               g2.drawImage(chatBoxImage, x - 5, y-150, 250, 150, null);
 
                g2.setFont (f);
                 g2.setColor(Color.WHITE);
-                g2.drawString("Lost Girl", 5 + x,  y - 245 );
+                g2.drawString(name, 5 + x,  y - 115 );
     
-                g2.drawString(lines.get(line), 5 + x,  y - 230 );
+                g2.drawString(lines.get(line), 5 + x,  y - 100 );
             }
    
    
@@ -286,14 +286,9 @@ public class NPC {
            curr_Animation.update();
      } 
 
+     
+
      public void talk() {
-         isTalking = true;
-
-
-
-     }
-
-     public void talkTarget() {
 
       
         if(!isTalking)

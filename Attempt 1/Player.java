@@ -112,19 +112,23 @@ public class Player {
       if (isTalking) {
          if (y <300) {
             g2.drawImage(chatBoxImage, x - 5, y+90, 250, 150, null);
+            g2.setFont (f);
+            g2.setColor(Color.WHITE);
+            g2.drawString("Lost Girl", 5 + x,  y + 145 );
+   
+            g2.drawString(line, 5 + x,  y + 160 );
+
          }
          else {
-            g2.drawImage(chatBoxImage, x - 5, y-250, 250, 150, null);
+            g2.drawImage(chatBoxImage, x - 5, y-150, 250, 150, null);
+
+            g2.setFont (f);
+            g2.setColor(Color.WHITE);
+            g2.drawString("Lost Girl", 5 + x,  y - 115 );
+
+            g2.drawString(line, 5 + x,  y - 100 );
          }
-
-
-         g2.setFont (f);
-         g2.setColor(Color.WHITE);
-         g2.drawString("Lost Girl", 5 + x,  y - 45 );
-
-         g2.drawString(line, 5 + x,  y - 25 );
       }
-   
    }
 
 
