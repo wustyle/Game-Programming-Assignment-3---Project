@@ -271,7 +271,6 @@ public class GameWindow extends JFrame implements
 
 		if (isGameOver) {
 			GameOver(gScr);
-			soundManager.playSound("gameOver", false);
 			//not sure what to do when game over
 		} 
 		else
@@ -1020,6 +1019,9 @@ public class GameWindow extends JFrame implements
 	}
 
 	public void gameOver() {
+		soundManager.stopSound("combat");
+		soundManager.stopSound("background");
+		soundManager.playSound("gameOver", false);
 		isGameOver = true;
 	}
 
