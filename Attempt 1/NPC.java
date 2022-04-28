@@ -33,7 +33,7 @@ public class NPC {
 
     private int x;
     private int y;
-
+    private int i;
     private GameWindow window;
     private Player player;
 
@@ -55,6 +55,7 @@ public class NPC {
         name = n;
         x = X;
         y = Y;
+        i=0;
 
         this.window = (GameWindow) w;
         this.player= p;
@@ -63,7 +64,7 @@ public class NPC {
         line = 0;
         isTalking = false;
         chatBoxImage = ImageManager.loadImage ("images/dialogue-box-png.png");
-
+        int upgrades[] = {100, 200, 300, 400, 500};
 
         if(name == "Jon"){
             down_Animation = loadAnimation("images/NPC/tile", 3, 48);
@@ -97,7 +98,8 @@ public class NPC {
             lines.add("Thank you, village chief.");
             lines.add("Press 'SHIFT' to attack.");
 
-        } else if(name == "Zeke - Forest guard"){
+        } 
+        else if(name == "Zeke - Forest guard"){
             down_Animation = loadAnimation("images/NPC/tile", 3, 0);
             left_Animation = loadAnimation("images/NPC/tile", 3, 12);
             right_Animation = loadAnimation("images/NPC/tile", 3, 24);
@@ -108,7 +110,23 @@ public class NPC {
             lines.add("Thank you!");
 
         }
+        else if(name == "Myriam - Merchant"){
+            lines.add("I'm Myriam the Merchant! How can I help you?");
+            lines.add("I would like to upgrade my weapon please.");
+            lines.add("Okay! The cost to upgrade your weapon is: $" + upgrades[i]);
+            int money = player.getMoney();
+            lines.add("Okay! I have: $"+ money);
 
+            if(money < upgrades[i]){
+                lines.add("I'm sorry, you don't have enough money to purchase this upgrade.");
+            }
+            else{
+                player.MoneyMinusMinus(upgrades[i]);
+                lines.add("Your weapon is upgraded! Thanks for purchasing");
+                i = i + 1;
+                player.equip("sword");
+            }
+        }
         
 
         // loadAnimation();

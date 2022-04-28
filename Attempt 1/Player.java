@@ -337,6 +337,13 @@ public class Player {
        money += m;
    }
 
+   public void MoneyMinusMinus(int m){
+      money -= m;
+   }
+
+   public int getMoney(){
+      return money;
+   }
 
 
 
