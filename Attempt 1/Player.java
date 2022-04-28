@@ -49,11 +49,20 @@ public class Player {
 
    private String action;
 
+
+
+   // Talking related stuff
+
+   private boolean isTalking;
+   private String line;
+   private Image chatBoxImage;
+
+
    public Player (JFrame window) {
       this.window = window;
 
-      playerLeftImage = loadImage("images/playerLeft.gif");
-      playerRightImage = loadImage("images/playerRight.gif");
+      chatBoxImage = ImageManager.loadImage ("images/dialogue-box-png.png");
+
 
       playerImage = playerRightImage;
 
@@ -78,6 +87,8 @@ public class Player {
 
       anim_stop_counter = 1;
       anim_stop_condition = 12;
+
+      isTalking = false;
    }
 
    public void draw (Graphics2D g2) {
@@ -85,13 +96,30 @@ public class Player {
       curr_Animation.draw(g2, x, y);
 
       Font f = new Font ("Calibri", Font.ITALIC, 14);
+      g2.setFont (f);
+      g2.setColor(Color.BLACK);
+      g2.drawString(action, 20 + x,  y - 35 );
+
+      g2.drawString("Lost Girl", 20 + x,  y - 25 );
+
+      g2.drawString("" + hp, 25 + x,  y - 15 );
+
+      if (isTalking) {
+         if (y <300) {
+            g2.drawImage(chatBoxImage, x - 5, y+90, 250, 150, null);
+         }
+         else {
+            g2.drawImage(chatBoxImage, x - 5, y-250, 250, 150, null);
+         }
+
+
          g2.setFont (f);
-         g2.setColor(Color.BLACK);
-         g2.drawString(action, 20 + x,  y - 35 );
+         g2.setColor(Color.WHITE);
+         g2.drawString("Lost Girl", 5 + x,  y - 45 );
 
-         g2.drawString("Lost Girl", 20 + x,  y - 25 );
-
-         g2.drawString("" + hp, 25 + x,  y - 15 );
+         g2.drawString(line, 5 + x,  y - 25 );
+      }
+   
    }
 
 
@@ -370,4 +398,21 @@ public class Player {
          curr_Animation.update();
    }
 
+
+
+
+
+
+
+
+
+   // stuff for talking
+
+   public void setTalking(boolean b) {
+      isTalking = b;
+   }
+
+   public void setLine(String s) {
+      line = s;
+   }
 }

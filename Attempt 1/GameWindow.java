@@ -1,4 +1,3 @@
-import javax.lang.model.util.ElementScanner6;
 import javax.swing.*;			// need this for GUI objects
 import java.awt.*;			// need this for certain AWT classes
 import java.awt.image.BufferedImage;
@@ -70,13 +69,16 @@ public class GameWindow extends JFrame implements
 
 	private Player player;
 
+	private ArrayList<NPC> npcs;
 	private ArrayList<Enemy> enemies; 
 	private ArrayList<Item> items; 
 	private Enemy currTarget;
+	private NPC currNPCTarget;
 
 	private CombatMenu CM;
 
 	ArrayList<JPanel> panels;
+
 
 	public GameWindow() {
  
@@ -112,9 +114,20 @@ public class GameWindow extends JFrame implements
 		player = new Player(this);
 
 		enemies = new ArrayList<>(); //should work
-
+		
+		initNPCs();
 		
 		startGame();
+	}
+
+	private void initNPCs() {
+		npcs = new ArrayList<>();
+
+		npcs.add(new NPC(this, player, 0, 0, "Jon"));
+		npcs.add(new NPC(this, player, 0, 0, "Layla - Village Chief"));
+		npcs.add(new NPC(this, player, 0, 0, "Zeke - Forest guard"));
+
+		currNPCTarget = npcs.get(0);
 	}
 
 	private JPanel initNewPanel() {
@@ -219,7 +232,9 @@ public class GameWindow extends JFrame implements
 		} else if (isChap2) {
 			
 		} else if (!isChap2) {
-			
+			for (NPC npc : npcs) {
+				npc.update_Anim();
+			}
 		}
 		else if (!isPaused && isAnimShown && !isAnimPaused) {}
 			//animation.update();
@@ -303,6 +318,10 @@ public class GameWindow extends JFrame implements
 		bgManager.draw(imageContext);
 		//tileMap.draw(imageContext);
 		player.draw(imageContext);
+
+		for (NPC npc : npcs) {
+			npc.draw(imageContext);
+		}
 	
 		//if (isAnimShown)
 		//	animation.draw(imageContext);		// draw the animation
@@ -800,6 +819,10 @@ public class GameWindow extends JFrame implements
 		else 
 		if (keyCode == KeyEvent.VK_H && isCombat) {
 			player.drinkPotion();
+		}
+		else 
+		if (keyCode == KeyEvent.VK_T && !isCombat && !isChap2) {
+			currNPCTarget.talk();
 		}
 	}
 
