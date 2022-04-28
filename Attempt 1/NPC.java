@@ -124,7 +124,7 @@ public class NPC {
                 player.MoneyMinusMinus(upgrades[i]);
                 lines.add("Your weapon is upgraded! Thanks for purchasing");
                 i = i + 1;
-                player.equip("sword");
+                player.equip(new Equipment("sword"));
             }
         }
         
