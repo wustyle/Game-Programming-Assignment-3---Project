@@ -66,6 +66,7 @@ public class GameWindow extends JFrame implements
 	private boolean isCombat;
 	private boolean isChap2;
 	private boolean isGameOver;
+	private boolean isWon;
 
 	private Player player;
 
@@ -110,6 +111,7 @@ public class GameWindow extends JFrame implements
 		isCombat = false;
 		isChap2  = false;
 		isGameOver = false;
+		isWon = false;
 
 		player = new Player(this);
 
@@ -427,6 +429,38 @@ public class GameWindow extends JFrame implements
         g2.setFont(f1);
         g2.setColor(Color.yellow);
         g2.drawString("GAME OVER", getBounds().width /20, getBounds().height/2);
+
+        imageContext.dispose();
+		g2.dispose();
+	}
+	
+	private void Victory(Graphics gScr) {
+		//gameRenderTest(gScr);
+		Graphics2D imageContext = (Graphics2D) image.getGraphics();
+
+		
+		
+		Graphics2D g2 = (Graphics2D) gScr;
+		g2.drawImage(image, 0, 0, pWidth, pHeight, null);
+
+		
+
+
+        g2.setColor(Color.black);
+        Rectangle2D.Double gameOver = new Rectangle2D.Double(0, 0, getBounds().width, getBounds().height);
+        g2.fill(gameOver);
+
+        Font f1 = new Font("Arial Black", Font.PLAIN, 70);
+        g2.setFont(f1);
+        g2.setColor(Color.yellow);
+        g2.drawString("Victory", getBounds().width /20, getBounds().height/2);
+
+		f1 = new Font("Arial Black", Font.PLAIN, 36);
+        g2.setFont(f1);
+        g2.setColor(Color.green);
+
+		g2.drawString("Lilia returns home...", getBounds().width /20, getBounds().height/2 + 100);
+
 
         imageContext.dispose();
 		g2.dispose();
@@ -786,6 +820,10 @@ public class GameWindow extends JFrame implements
 			}
 		}
 		else 
+		if (keyCode == KeyEvent.VK_C && isChap2) {
+			enterBossCombat();
+		}
+		else 
 		if (keyCode == KeyEvent.VK_C && !isCombat) {
 			enterCombat();
 		}
@@ -981,6 +1019,15 @@ public class GameWindow extends JFrame implements
 		
 	}
 
+	private void spawnBoss() {
+		
+        
+		enemies.add(new Enemy(this, player, 600, 200));
+
+		currTarget = enemies.get(0);
+        
+	}
+
 
 	public void attack() {
 		player.attack(currTarget);
@@ -1044,6 +1091,23 @@ public class GameWindow extends JFrame implements
 		items = new ArrayList<>();
 	}
 
+	private void enterBossCombat(){
+		soundManager.stopSound("background");
+		soundManager.playSound("combat", true);
+		player.setX(300);
+		player.setY(400);
+
+		spawnEnemies();
+
+		CM.setVisible(true);
+
+		isCombat = true;
+
+		items = new ArrayList<>();
+	}
+
+	
+
 	private void randomCombat() {
 		Random rand = new Random();
 
@@ -1052,6 +1116,10 @@ public class GameWindow extends JFrame implements
 		if (i == 1) {
 			enterCombat();
 		}
+	}
+
+	public void setWon(boolean isWon) {
+		this.isWon = isWon;
 	}
 
 }

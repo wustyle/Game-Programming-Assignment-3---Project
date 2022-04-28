@@ -52,9 +52,52 @@ public class Enemy {
 
         animation = new Animation(w);
 
+        genLootTable(1);
+        setName(1);
+
         loadAnimation();
 
         animation.setLocation(X, Y);
+
+        action = "";
+
+        if (name == "charmander") {
+            LVL = player.getLVL() + 2;
+            
+            HP = LVL * 5;
+
+            dmg = LVL * 2;
+
+            animImage1 = loadImage("images/enemies/charmander.png");
+        }
+
+        if (name == "Charizard!!!") {
+            LVL = player.getLVL() + 2;
+            
+            HP = LVL * 25;
+
+            dmg = LVL * 4;
+
+            animImage1 = loadImage("images/enemies/charizard.jpg");
+
+        }
+        
+    }
+
+    public Enemy (JFrame w, Player p)
+    {
+        
+        this.window = (GameWindow) w;
+        this.player= p;
+
+        animation = new Animation(w);
+
+        genLootTable(2);
+        setName(2);
+        
+        loadAnimation();
+
+        animation.setLocation(750, 400);
 
         action = "";
 
@@ -142,6 +185,12 @@ public class Enemy {
 
         window.removeEnemy(this);
     }
+    public void die3() {
+        window.setWon(true);
+
+        window.removeEnemy(this);
+    }
+
 
     private void loot() {
         window.addLoot(new Item(""));
@@ -183,8 +232,7 @@ public class Enemy {
 
         if (i == 1) {
 
-            genLootTable(i);
-            setName(i);
+            
 
             Image animImage1 = loadImage("images/bird1.png");
             Image animImage2 = loadImage("images/bird2.png");
