@@ -119,6 +119,8 @@ public class NPC {
     public void draw (Graphics2D g2) {
         //animation.draw(g2);
 
+        curr_Animation.draw(g2, x, y);
+
         Font f = new Font ("Calibri", Font.ITALIC, 14);
          g2.setFont (f);
          g2.setColor(Color.WHITE);
@@ -127,17 +129,25 @@ public class NPC {
          if (isTalking) {
             if (y <300) {
                g2.drawImage(chatBoxImage, x - 5, y+90, 250, 150, null);
+               g2.setFont (f);
+               g2.setColor(Color.WHITE);
+               g2.drawString(name, 5 + x,  y + 95 );
+      
+               g2.drawString(lines.get(line), 5 + x,  y + 110 );
+
             }
             else {
                g2.drawImage(chatBoxImage, x - 5, y-250, 250, 150, null);
+
+               g2.setFont (f);
+                g2.setColor(Color.WHITE);
+                g2.drawString("Lost Girl", 5 + x,  y - 245 );
+    
+                g2.drawString(lines.get(line), 5 + x,  y - 230 );
             }
    
    
-            g2.setFont (f);
-            g2.setColor(Color.WHITE);
-            g2.drawString("Lost Girl", 5 + x,  y - 45 );
-   
-            g2.drawString(lines.get(line), 5 + x,  y - 25 );
+            
          }
 
     }
@@ -243,7 +253,7 @@ public class NPC {
   
         String fullPath;
   
-          for (int i=offset; i<=frames + offset; i++) {
+          for (int i=offset; i<frames + offset; i++) {
               if(i < 10){
               fullPath = prefix + "00" + i + suffix;
            }
@@ -269,7 +279,7 @@ public class NPC {
   
         anim_stop_counter++;
   
-        if (anim_stop_condition <= anim_stop_counter) {
+        if (anim_stop_condition * 2 <= anim_stop_counter) {
            act();
         }
         else

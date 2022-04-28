@@ -123,9 +123,9 @@ public class GameWindow extends JFrame implements
 	private void initNPCs() {
 		npcs = new ArrayList<>();
 
-		npcs.add(new NPC(this, player, 0, 0, "Jon"));
-		npcs.add(new NPC(this, player, 0, 0, "Layla - Village Chief"));
-		npcs.add(new NPC(this, player, 0, 0, "Zeke - Forest guard"));
+		npcs.add(new NPC(this, player, 300, 500, "Jon"));
+		npcs.add(new NPC(this, player, 600, 250, "Layla - Village Chief"));
+		npcs.add(new NPC(this, player, 900, 600, "Zeke - Forest guard"));
 
 		currNPCTarget = npcs.get(0);
 	}
@@ -990,7 +990,7 @@ public class GameWindow extends JFrame implements
 
 	public void flee() {
 		
-
+		
 		for (Enemy enemy : enemies) {
 			removeEnemy(enemy);
 		}

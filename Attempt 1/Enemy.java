@@ -146,6 +146,8 @@ public class Enemy {
     private void loot() {
         window.addLoot(new Item(""));
 
+        player.MoneyPlusPlus(LVL * 3);
+        
         player.lvlUp();
     }
 
