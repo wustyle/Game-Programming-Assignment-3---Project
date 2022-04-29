@@ -114,6 +114,14 @@ public class Player {
 
       g2.drawString("" + hp, 25 + x,  y - 15 );
 
+      f = new Font ("Calibri", Font.ITALIC, 60);
+      g2.setFont (f);
+      g2.setColor(Color.YELLOW);
+
+      g2.drawString("" + money , window.getWidth() - 300,  window.getHeight() - 50 );
+      g2.drawString( "Gold", window.getWidth() - 125,  window.getHeight() - 50 );
+
+      
       if (isTalking) {
          if (y <300) {
             g2.drawImage(chatBoxImage, x - 5, y+90, 250, 150, null);
@@ -316,7 +324,7 @@ public class Player {
    public void drinkPotion() {
       action = "Drinks potion. You are healed to full health!";
       
-      hp = lvl * 5;
+      hp = lvl * 5 + a2;
    }
 
    public int getHp() {

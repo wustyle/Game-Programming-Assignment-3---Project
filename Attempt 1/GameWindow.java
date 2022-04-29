@@ -232,11 +232,11 @@ public class GameWindow extends JFrame implements
 				enemy.update_Anim();
 			}
 		} else if (isChap2) {
-			
-		} else if (!isChap2) {
 			for (NPC npc : npcs) {
 				npc.update_Anim();
 			}
+		} else if (!isChap2) {
+			
 		}
 		else if (!isPaused && isAnimShown && !isAnimPaused) {}
 			//animation.update();
@@ -328,7 +328,7 @@ public class GameWindow extends JFrame implements
 		//imageEffect.draw(imageContext);			// draw the image effect
 
 		//Graphics2D g2 = (Graphics2D) getGraphics();	// get the graphics context for window
-		//drawButtons(imageContext);			// draw the buttons
+		drawButtons(imageContext);			// draw the buttons
 
 		Graphics2D g2 = (Graphics2D) gScr;
 		g2.drawImage(image, 0, 0, pWidth, pHeight, null);
@@ -350,6 +350,7 @@ public class GameWindow extends JFrame implements
 		bgManager.drawC2(imageContext);
 		player.draw(imageContext);
 
+		currNPCTarget.draw2(imageContext);
 		for (NPC npc : npcs) {
 			npc.draw(imageContext);
 		}
@@ -360,7 +361,7 @@ public class GameWindow extends JFrame implements
 		//imageEffect.draw(imageContext);			// draw the image effect
 
 		//Graphics2D g2 = (Graphics2D) getGraphics();	// get the graphics context for window
-		//drawButtons(imageContext);			// draw the buttons
+		drawButtons(imageContext);			// draw the buttons
 
 		Graphics2D g2 = (Graphics2D) gScr;
 		g2.drawImage(image, 0, 0, pWidth, pHeight, null);
@@ -675,9 +676,9 @@ public class GameWindow extends JFrame implements
 			g.setColor(Color.RED);
 
 			 if (isChap2) {
-				g.drawString("Go to Forest", stopButtonArea.x+40, stopButtonArea.y+25);
+				g.drawString("Go to Forest", showAnimButtonArea.x+35, showAnimButtonArea.y+25);
 			} else if (isCombat) {
-				g.drawString("     Flee", stopButtonArea.x+40, stopButtonArea.y+25);
+				g.drawString("     Flee", showAnimButtonArea.x+35, showAnimButtonArea.y+25);
 			} else {
 				g.drawString("Go to Village", showAnimButtonArea.x+35, showAnimButtonArea.y+25);
 			}
@@ -1096,22 +1097,11 @@ public class GameWindow extends JFrame implements
 
 	public void flee() {
 		
+		enemies = new ArrayList<>();
 		
-		for (Enemy enemy : enemies) {
-			removeEnemy(enemy);
-		}
+		isCombat = false;
 
-		if (enemies.size()>=1) {
-			for (Enemy enemy : enemies) {
-				removeEnemy(enemy);
-			}
-		}
-
-		if (enemies.size()>=1) {
-			for (Enemy enemy : enemies) {
-				removeEnemy(enemy);
-			}
-		}
+		
 	}
 
 	@Override

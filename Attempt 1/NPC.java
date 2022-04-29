@@ -49,6 +49,8 @@ public class NPC {
     private boolean isTalking;
     private Image chatBoxImage;
 
+    private Image targetImage;
+
 
     public NPC (JFrame w, Player p, int X, int Y, String n)
     {
@@ -64,6 +66,7 @@ public class NPC {
         line = 0;
         isTalking = false;
         chatBoxImage = ImageManager.loadImage ("images/dialogue-box-png.png");
+        targetImage = ImageManager.loadImage ("images/Ship1_Explosion_013.png");
         int upgrades[] = {100, 200, 300, 400, 500};
 
         if(name == "Jon"){
@@ -169,6 +172,16 @@ public class NPC {
    
             
          }
+
+    }
+
+    public void draw2 (Graphics2D g2) {
+        //animation.draw(g2);
+
+        g2.drawImage(targetImage, x -15 , y -15 , 70, 70, null);
+
+
+        
 
     }
 
