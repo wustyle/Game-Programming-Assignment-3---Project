@@ -638,7 +638,7 @@ public class GameWindow extends JFrame implements
 			g.setColor(Color.RED);	
 
 		if (isChap2) {
-			g.drawString(" Weapon++", pauseButtonArea.x+45, pauseButtonArea.y+25);
+			g.drawString("Weapon++", pauseButtonArea.x+45, pauseButtonArea.y+25);
 		} else if (isCombat) {
 			g.drawString(" Attack", pauseButtonArea.x+45, pauseButtonArea.y+25);
 		} else {
@@ -890,9 +890,14 @@ public class GameWindow extends JFrame implements
 		if (keyCode == KeyEvent.VK_T && isChap2) {
 			currNPCTarget.talk();
 		}
+		else 
+		if (keyCode == KeyEvent.VK_TAB && isChap2) {
+			swapTargets();
+		}
 	}
 
 
+	
 	public void keyReleased (KeyEvent e) {
 
 	}
@@ -1176,5 +1181,10 @@ public class GameWindow extends JFrame implements
 	public void setWon(boolean isWon) {
 		this.isWon = isWon;
 	}
+
+	private void swapTargets() {
+		
+	}
+
 
 }

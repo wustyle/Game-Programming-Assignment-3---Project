@@ -82,6 +82,7 @@ public class Player {
       w2 = 5;
       lvl = 0;
       lvlUp();
+      money = 1200;
 
       action = "";
 
@@ -105,16 +106,16 @@ public class Player {
 	   //g2.drawImage (playerImage, x, y, XSIZE, YSIZE, null);
       curr_Animation.draw(g2, x, y);
 
-      Font f = new Font ("Calibri", Font.ITALIC, 14);
+      Font f = new Font ("Calibri", Font.BOLD, 14);
       g2.setFont (f);
       g2.setColor(Color.BLACK);
       g2.drawString(action, 20 + x,  y - 35 );
 
-      g2.drawString("Lost Girl", 20 + x,  y - 25 );
+      g2.drawString("Lillia", 20 + x,  y - 25 );
 
       g2.drawString("" + hp, 25 + x,  y - 15 );
 
-      f = new Font ("Calibri", Font.ITALIC, 60);
+      f = new Font ("Calibri", Font.BOLD, 60);
       g2.setFont (f);
       g2.setColor(Color.YELLOW);
 
@@ -127,7 +128,7 @@ public class Player {
             g2.drawImage(chatBoxImage, x - 5, y+90, 250, 150, null);
             g2.setFont (f);
             g2.setColor(Color.WHITE);
-            g2.drawString("Lost Girl", 5 + x,  y + 145 );
+            g2.drawString("Lillia", 5 + x,  y + 145 );
    
             g2.drawString(line, 5 + x,  y + 160 );
 
@@ -137,7 +138,7 @@ public class Player {
 
             g2.setFont (f);
             g2.setColor(Color.WHITE);
-            g2.drawString("Lost Girl", 5 + x,  y - 115 );
+            g2.drawString("Lillia", 5 + x,  y - 115 );
 
             g2.drawString(line, 5 + x,  y - 100 );
          }
@@ -468,9 +469,9 @@ public class Player {
    public void upgradeArmour() {
       money -= 500;
       
-      w2 += 5;
+      a2 += 5;
 
-      dmg = lvl * 2 + w2;
+      hp = lvl * 5 + a2;
    }
 
    public int getMoney() {
