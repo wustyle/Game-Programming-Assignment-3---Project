@@ -47,6 +47,9 @@ public class Player {
    private int dmg;
    private Equipment weapon;
 
+   private int w2;
+   private int a2;
+
    private String action;
 
 
@@ -75,6 +78,9 @@ public class Player {
       y = (int) ((window.getHeight() - playerRightImage.getHeight(null)) / 2);
 
       weapon = new Equipment("sword");
+
+      a2 = 5;
+      w2 = 5;
       lvl = 0;
       lvlUp();
 
@@ -271,8 +277,9 @@ public class Player {
 
    public void lvlUp() {
       lvl++;
-      hp = lvl * 5;
-      dmg = (lvl * 2) + weapon.getAtk();
+      hp = lvl * 5 + a2;
+      //dmg = (lvl * 2) + weapon.getAtk();
+      dmg = (lvl * 2) + w2;
    }
 
    private void equip(Equipment e) {
@@ -421,5 +428,32 @@ public class Player {
 
    public void setLine(String s) {
       line = s;
+   }
+
+
+
+
+
+
+   // Upgrading armour
+
+   public void upgradeWeapon() {
+      money -= 500;
+      
+      w2 += 5;
+
+      dmg = lvl * 2 + w2;
+   }
+
+   public void upgradeArmour() {
+      money -= 500;
+      
+      w2 += 5;
+
+      dmg = lvl * 2 + w2;
+   }
+
+   public int getMoney() {
+       return money;
    }
 }

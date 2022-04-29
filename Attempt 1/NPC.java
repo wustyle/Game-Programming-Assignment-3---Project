@@ -108,12 +108,6 @@ public class NPC {
             lines.add("Thank you!");
 
         }
-
-        
-
-        // loadAnimation();
-
-        
     }
     
     public void draw (Graphics2D g2) {
