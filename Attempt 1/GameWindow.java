@@ -705,7 +705,7 @@ public class GameWindow extends JFrame implements
 
 	private void startGame() { 
 		if (gameThread == null) {
-			soundManager.playSound ("background", true);
+			soundManager.playSound ("village", true);
 
 			bgManager = new BackgroundManager (this, 12);
 	
@@ -980,7 +980,7 @@ public class GameWindow extends JFrame implements
 			{
 				isCombat = false;
 				soundManager.stopSound("combat");
-				soundManager.playSound("background", true);
+				soundManager.playSound("forest", true);
 
 				
 			}
@@ -1067,7 +1067,7 @@ public class GameWindow extends JFrame implements
 
 	public void gameOver() {
 		soundManager.stopSound("combat");
-		soundManager.stopSound("background");
+		soundManager.stopSound("forest");
 		soundManager.playSound("gameOver", false);
 		isGameOver = true;
 	}
@@ -1077,7 +1077,7 @@ public class GameWindow extends JFrame implements
 	}
 
 	private void enterCombat(){
-		soundManager.stopSound("background");
+		soundManager.stopSound("forest");
 		soundManager.playSound("combat", true);
 		player.setX(300);
 		player.setY(400);
@@ -1092,7 +1092,7 @@ public class GameWindow extends JFrame implements
 	}
 
 	private void enterBossCombat(){
-		soundManager.stopSound("background");
+		soundManager.stopSound("forest");
 		soundManager.playSound("combat", true);
 		player.setX(300);
 		player.setY(400);

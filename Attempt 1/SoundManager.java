@@ -17,8 +17,8 @@ public class SoundManager {				// a Singleton class
 	private SoundManager () {
 		clips = new HashMap<String, Clip>();
 
-		Clip clip = loadClip("sounds/village.wav");
-		clips.put("background", clip);
+		Clip clip = loadClip("sounds/forest.wav");
+		clips.put("forest", clip);
 
 		clip = loadClip("sounds/attack.wav");
 		clips.put("attack", clip);		
@@ -28,6 +28,9 @@ public class SoundManager {				// a Singleton class
 
 		clip = loadClip("sounds/gameover.wav");
 		clips.put("gameOver", clip);
+
+		clip = loadClip("sounds/village.wav");
+		clips.put("village", clip);
 	}
 
 

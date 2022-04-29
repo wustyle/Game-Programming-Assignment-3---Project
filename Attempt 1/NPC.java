@@ -108,6 +108,8 @@ public class NPC {
 
             lines.add("You're going into the forest? Be careful in there. Stock up on potions by killing enemies.");
             lines.add("Thank you!");
+            lines.add("Also, there's a big scary Monster, he's called the King of the Forest! Don't attempt to fight him unless you are experienced enough. You need to have at least 20 levels.");
+            lines.add("That means I must train hard! Thank you.");
 
         }
         else if(name == "Myriam - Merchant"){
