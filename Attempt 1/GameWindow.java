@@ -320,9 +320,7 @@ public class GameWindow extends JFrame implements
 		//tileMap.draw(imageContext);
 		player.draw(imageContext);
 
-		for (NPC npc : npcs) {
-			npc.draw(imageContext);
-		}
+		
 	
 		//if (isAnimShown)
 		//	animation.draw(imageContext);		// draw the animation
@@ -351,6 +349,10 @@ public class GameWindow extends JFrame implements
 
 		bgManager.drawC2(imageContext);
 		player.draw(imageContext);
+
+		for (NPC npc : npcs) {
+			npc.draw(imageContext);
+		}
 	
 		//if (isAnimShown)
 		//	animation.draw(imageContext);		// draw the animation
@@ -634,7 +636,13 @@ public class GameWindow extends JFrame implements
 		else
 			g.setColor(Color.RED);	
 
+		if (isChap2) {
+			g.drawString(" Weapon++", pauseButtonArea.x+45, pauseButtonArea.y+25);
+		} else if (isCombat) {
 			g.drawString(" Attack", pauseButtonArea.x+45, pauseButtonArea.y+25);
+		} else {
+			g.drawString("Force Combat", pauseButtonArea.x+45, pauseButtonArea.y+25);
+		}
 
 		// draw the stop 'button'
 
@@ -647,8 +655,13 @@ public class GameWindow extends JFrame implements
 		else
 			g.setColor(Color.RED);
 
-		
+		if (isChap2) {
+			g.drawString("Armour ++", stopButtonArea.x+40, stopButtonArea.y+25);
+		} else if (isCombat) {
 			g.drawString("   Heal", stopButtonArea.x+40, stopButtonArea.y+25);
+		} else {
+			g.drawString("Meet Boss", stopButtonArea.x+40, stopButtonArea.y+25);
+		}
 
 		// draw the show animation 'button'
 
@@ -660,8 +673,15 @@ public class GameWindow extends JFrame implements
 			g.setColor(Color.WHITE);
 		else
 			g.setColor(Color.RED);
-      		g.drawString("     Flee", showAnimButtonArea.x+35, showAnimButtonArea.y+25);
 
+			 if (isChap2) {
+				g.drawString("Go to Forest", stopButtonArea.x+40, stopButtonArea.y+25);
+			} else if (isCombat) {
+				g.drawString("     Flee", stopButtonArea.x+40, stopButtonArea.y+25);
+			} else {
+				g.drawString("Go to Village", showAnimButtonArea.x+35, showAnimButtonArea.y+25);
+			}
+      		
 		// draw the pause anim 'button'
 
 		/*g.setColor(Color.BLACK);
@@ -773,7 +793,9 @@ public class GameWindow extends JFrame implements
 			bgManager.moveLeft();
 			player.moveLeft();
 
-			randomCombat();
+			if (!isChap2 && !isCombat) {
+				randomCombat();
+			}
 		}
 		else
 		if (keyCode == KeyEvent.VK_RIGHT) {
@@ -783,7 +805,9 @@ public class GameWindow extends JFrame implements
 			bgManager.moveRight();
 			player.moveRight();
 			
-			randomCombat();
+			if (!isChap2 && !isCombat) {
+				randomCombat();
+			}
 		}
 		else
 		if (keyCode == KeyEvent.VK_UP) {
@@ -793,7 +817,9 @@ public class GameWindow extends JFrame implements
 			bgManager.moveUp();
 			player.moveUp();
 			
-			randomCombat();
+			if (!isChap2 && !isCombat) {
+				randomCombat();
+			}
 		}
 		else
 		if (keyCode == KeyEvent.VK_DOWN) {
@@ -803,7 +829,9 @@ public class GameWindow extends JFrame implements
 			bgManager.moveDown();
 			player.moveDown();
 			
-			randomCombat();
+			if (!isChap2 && !isCombat) {
+				randomCombat();
+			}
 		}
 		else
 		if (keyCode == KeyEvent.VK_I) {
@@ -829,7 +857,7 @@ public class GameWindow extends JFrame implements
 		}
 		else 
 		if (keyCode == KeyEvent.VK_N && !isChap2) {
-			isChap2 = true;
+			
 		}
 		else 
 		if (keyCode == KeyEvent.VK_A && isCombat) {
@@ -858,7 +886,7 @@ public class GameWindow extends JFrame implements
 			player.drinkPotion();
 		}
 		else 
-		if (keyCode == KeyEvent.VK_T && !isCombat && !isChap2) {
+		if (keyCode == KeyEvent.VK_T && isChap2) {
 			currNPCTarget.talk();
 		}
 	}
@@ -922,17 +950,46 @@ public class GameWindow extends JFrame implements
 		if (isStopped && !isOverQuitButton) 	// don't do anything if game stopped
 			return;
 
-		if (isOverStopButton) {			// mouse click on Stop button
+		if (isOverStopButton && isCombat) {			// mouse click on Stop button
 			player.drinkPotion();
 		}
 		else
-		if (isOverPauseButton) {		// mouse click on Pause button
+		if (isOverPauseButton && isCombat) {		// mouse click on Pause button
 			attack();    	// toggle pausing
 		}
 		else 
-		if (isOverShowAnimButton && !isPaused) {// mouse click on Start Anim button
+		if (isOverShowAnimButton && isCombat) {// mouse click on Start Anim button
 			flee();
 		}
+		else
+		if (isOverStopButton && isChap2) {		
+			if (player.getMoney() >=500) {
+				player.upgradeArmour();; 
+			}
+		}
+		else
+		if (isOverPauseButton && isChap2) {	
+			if (player.getMoney() >=500) {
+				player.upgradeWeapon();; 
+			}
+		}
+		else 
+		if (isOverShowAnimButton && isChap2) {
+			isChap2 = false;
+		}
+		else
+		if (isOverStopButton) {		
+			enterBossCombat();
+		}
+		else
+		if (isOverPauseButton) {		
+			enterCombat();    	
+		}
+		else 
+		if (isOverShowAnimButton) {
+			isChap2 = true;				//Go to village
+		}
+		
 		/* else
 		if (isOverPauseAnimButton) {		// mouse click on Pause Anim button
 			if (isAnimPaused) {
@@ -954,6 +1011,8 @@ public class GameWindow extends JFrame implements
 	   the buttons (Pause, Stop, Show Anim, Pause Anim, and Quit). It sets a
 	   boolean value which will cause the button to be displayed accordingly.
 	*/
+
+	
 
 	private void testMouseMove(int x, int y) { 
 		if (isRunning) {
@@ -1020,12 +1079,9 @@ public class GameWindow extends JFrame implements
 	}
 
 	private void spawnBoss() {
-		
-        
-		enemies.add(new Enemy(this, player, 600, 200));
+		enemies.add(new Enemy(this, player));
 
 		currTarget = enemies.get(0);
-        
 	}
 
 
@@ -1043,6 +1099,18 @@ public class GameWindow extends JFrame implements
 		
 		for (Enemy enemy : enemies) {
 			removeEnemy(enemy);
+		}
+
+		if (enemies.size()>=1) {
+			for (Enemy enemy : enemies) {
+				removeEnemy(enemy);
+			}
+		}
+
+		if (enemies.size()>=1) {
+			for (Enemy enemy : enemies) {
+				removeEnemy(enemy);
+			}
 		}
 	}
 
@@ -1092,12 +1160,10 @@ public class GameWindow extends JFrame implements
 	}
 
 	private void enterBossCombat(){
-		soundManager.stopSound("forest");
-		soundManager.playSound("combat", true);
 		player.setX(300);
 		player.setY(400);
 
-		spawnEnemies();
+		spawnBoss();
 
 		CM.setVisible(true);
 
@@ -1106,7 +1172,6 @@ public class GameWindow extends JFrame implements
 		items = new ArrayList<>();
 	}
 
-	
 
 	private void randomCombat() {
 		Random rand = new Random();

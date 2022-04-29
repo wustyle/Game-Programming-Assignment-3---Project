@@ -112,7 +112,7 @@ public class NPC {
             lines.add("That means I must train hard! Thank you.");
 
         }
-        else if(name == "Myriam - Merchant"){
+        /* else if(name == "Myriam - Merchant"){
             lines.add("I'm Myriam the Merchant! How can I help you?");
             lines.add("I would like to upgrade my weapon please.");
             lines.add("Okay! The cost to upgrade your weapon is: $" + upgrades[i]);
@@ -128,7 +128,7 @@ public class NPC {
                 i = i + 1;
                 player.equip(new Equipment("sword"));
             }
-        }
+        } */
         
 
         // loadAnimation();

@@ -57,6 +57,9 @@ public class Enemy {
 
         loadAnimation();
 
+        genLootTable(1);
+        setName(1);
+
         animation.setLocation(X, Y);
 
         action = "";
