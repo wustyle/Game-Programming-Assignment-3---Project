@@ -22,6 +22,17 @@ public class Enemy {
 
     private Animation animation;
 
+    private Anim curr_Animation;
+    private Anim idle_animation;
+    private Anim die_Animation;
+    private Anim atk_animation;
+    private Anim hurt_animation;
+    private Anim cast_animation;
+    private Anim taunt_animation;
+
+    private int anim_stop_condition;
+    private int anim_stop_counter;
+
     private int x;
     private int y;
 
@@ -50,68 +61,65 @@ public class Enemy {
         this.window = (GameWindow) w;
         this.player= p;
 
-        animation = new Animation(w);
+        genEnemy();
 
-        genLootTable(1);
-        setName(1);
-
-        loadAnimation();
-
-        genLootTable(1);
-        setName(1);
-
-        animation.setLocation(X, Y);
+        //animation.setLocation(X, Y);
 
         action = "";
 
-        if (name == "charmander") {
-            LVL = player.getLVL() + 2;
-            
-            HP = LVL * 5;
-
-            dmg = LVL * 2;
-
-            animImage1 = loadImage("images/enemies/charmander.png");
-        }
-
-        if (name == "Charizard!!!") {
-            LVL = player.getLVL() + 2;
-            
-            HP = LVL * 25;
-
-            dmg = LVL * 4;
-
-            animImage1 = loadImage("images/enemies/charizard.jpg");
-
-        }
-        
     }
 
-    public Enemy (JFrame w, Player p)
+    public Enemy (JFrame w, Player p) //To use for loading the boss
     {
         
         this.window = (GameWindow) w;
         this.player= p;
 
-        animation = new Animation(w);
+        x = 750;
+        y = 400;
 
         genLootTable(2);
         setName(2);
         
-        loadAnimation();
-
         animation.setLocation(750, 400);
 
         action = "";
 
-        if (name == "charmander") {
             LVL = player.getLVL() + 2;
             
-            HP = LVL * 5;
+            HP = LVL * 25;
 
-            dmg = LVL * 2;
+            dmg = LVL * 4;
 
-            animImage1 = loadImage("images/enemies/charmander.png");
+    }
+
+    private void genEnemy() {
+        Random rand = new Random();
+
+        int i = rand.nextInt(1);
+        i = 1;
+        genLootTable(i);
+        setName(i);
+
+        
+
+        if (i == 1) {
+            LVL = player.getLVL() + 1;
+            
+            HP = LVL * 3;
+
+            dmg = LVL * 3;
+
+            idle_animation = loadAnimation("images/enemies/Flipped/Flipped/Idle/Wraith_03_Idle_", 12, 0);
+            die_Animation = loadAnimation("images/enemies/Flipped/Flipped/Dying/Wraith_03_Dying_", 15, 0);
+            atk_animation = loadAnimation("images/enemies/Flipped/Flipped/AttackingFlip/Wraith_03_Attack_", 12, 0);
+            hurt_animation = loadAnimation("images/enemies/Flipped/Flipped/Hurt/Wraith_03_Hurt_", 12, 0);
+            cast_animation = loadAnimation("images/enemies/Flipped/Flipped/Casting/Wraith_03_Casting Spells_", 18, 0);
+            taunt_animation = loadAnimation("images/enemies/Flipped/Flipped/Taunt/Wraith_03_Taunt_", 18, 0);
+            curr_Animation = idle_animation;
+
+            anim_stop_condition = 12;
+            anim_stop_counter = 1;
         }
 
         if (name == "Charizard!!!") {
@@ -124,11 +132,16 @@ public class Enemy {
             animImage1 = loadImage("images/enemies/charizard.jpg");
 
         }
-        
     }
     
     public void draw (Graphics2D g2) {
-        g2.drawImage(animImage1, x, y, 150, 150, null);
+        if (name == "wraith") {
+            curr_Animation.draw(g2, x, y);
+        } else{
+            g2.drawImage(animImage1, x, y, 150, 150, null);
+
+        }
+        
 
         Font f = new Font ("Calibri", Font.ITALIC, 14);
          g2.setFont (f);
@@ -145,14 +158,31 @@ public class Enemy {
 
         int i = rand.nextInt(3);
 
-        if (i == 1) {
-            attack();
+        if (name == "wraith") {
+            if (i == 1) {
+                attack();
+    
+                curr_Animation = atk_animation;
+                anim_stop_counter = 1;
+                anim_stop_condition = 12;
+            }
+            else if (i == 2) {
+                action = "k,jbsdjfnaldfkaldmmk - speaks in undeath...";
+                
+                curr_Animation = taunt_animation;
+                anim_stop_counter = 1;
+                anim_stop_condition = 18;
+            } else {
+                action = "Necromancy - Undead energies flow to the wraith!";
+
+                HP = LVL * 3;
+
+                curr_Animation = cast_animation;
+                anim_stop_counter = 1;
+                anim_stop_condition = 18;
+            }
         }
-        else if (i == 2) {
-            action = "Roars with beastial vigor!!! so fierce lolol";
-        } else {
-            action = "Chases his tail, he's almost too cute to kill... Almost!";
-        }
+        
     }
 
     public int getHP() {
@@ -161,6 +191,12 @@ public class Enemy {
 
     public void setHP(int hP) {
         HP = hP;
+
+        if (HP > 0) {
+            curr_Animation = hurt_animation;
+            anim_stop_counter = 1;
+            anim_stop_condition = 12; 
+        }
     }
 
     public void attack() {
@@ -180,6 +216,14 @@ public class Enemy {
 
     public void die() {
         loot();
+
+        curr_Animation = die_Animation;
+        anim_stop_counter = 1;
+        anim_stop_condition = 15;
+
+        //window.removeEnemy(this);
+
+        //HP = 0;
 
         window.removeEnemy(this);
     }
@@ -209,7 +253,7 @@ public class Enemy {
 
     public void setName(int i) {
         if (i == 1) {
-            name = "charmander";
+            name = "wraith";
         } else {
             name = "Charizard!!!";
 
@@ -225,63 +269,58 @@ public class Enemy {
 
 
     // Anim related stuff
-    public void loadAnimation() {
 
-        Random rand = new Random();
 
-        //int i = rand.nextInt(5);
-
-        int i = 1;// for testing purposes
-
-        if (i == 1) {
-
-            
-
-            Image animImage1 = loadImage("images/bird1.png");
-            Image animImage2 = loadImage("images/bird2.png");
-            Image animImage3 = loadImage("images/bird3.png");
-            Image animImage4 = loadImage("images/bird4.png");
-            Image animImage5 = loadImage("images/bird5.png");
-            Image animImage6 = loadImage("images/bird6.png");
-            Image animImage7 = loadImage("images/bird7.png");
-            Image animImage8 = loadImage("images/bird8.png");
-            Image animImage9 = loadImage("images/bird9.png");
-
-            // create animation object and insert frames
-
-            animation = new Animation(window);
-
-            animation.addFrame(animImage1, 200);
-            animation.addFrame(animImage2, 200);
-            animation.addFrame(animImage3, 200);
-            animation.addFrame(animImage4, 200);
-            animation.addFrame(animImage5, 200);
-            animation.addFrame(animImage6, 200);
-            animation.addFrame(animImage7, 200);		
-            animation.addFrame(animImage8, 200);
-            animation.addFrame(animImage9, 200);
-        }
-        else if (i == 2) {
-            
-        } 
-        else if (i == 3) {
-            
-        } 
-        else if (i == 4) {
-            
-        } 
-        else {
-            
-        }
+    public Anim loadAnimation(String dir, int frames, int offset) {
+      // load images for wild cat animation
 		
-	}
+		String prefix = dir;
+		String suffix = ".png.png";
+
+		Anim animation = new Anim((GameWindow) window);
+
+      String fullPath;
+
+		for (int i=offset; i<frames + offset; i++) {
+			if(i < 10){
+            fullPath = prefix + "00" + i + suffix;
+         }
+            
+         else if(i < 100){
+            fullPath = prefix + "0" + i + suffix;
+         }
+          else {
+            fullPath = prefix + i + suffix;
+
+          }  
+         
+         
+            
+			Image animImage = ImageManager.loadImage(fullPath);
+			animation.addFrame(animImage, 100);
+		}
+
+      return animation;
+   }
 
     public Image loadImage (String fileName) {
 		return new ImageIcon(fileName).getImage();
 	}
 
     public void update_Anim() {
-        animation.update();
+        anim_stop_counter++;
+
+      if (anim_stop_condition <= anim_stop_counter) {
+          if (curr_Animation == die_Animation || curr_Animation.equals(die_Animation) || HP <= 0) {
+            window.removeEnemy(this);
+
+          }
+         anim_stop_counter = 1;
+         curr_Animation = idle_animation;
+         anim_stop_condition = 12;
+      }
+      else
+         curr_Animation.update();
     }
 
 

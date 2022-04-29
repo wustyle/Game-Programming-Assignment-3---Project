@@ -359,7 +359,9 @@ public class Player {
       money -= m;
    }
 
-   
+   public void setAction(String action) {
+       this.action = action;
+   }
 
 
 

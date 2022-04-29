@@ -879,10 +879,6 @@ public class GameWindow extends JFrame implements
 			}
 		}
 		else 
-		if (keyCode == KeyEvent.VK_F && isCombat) {
-			flee();
-		}
-		else 
 		if (keyCode == KeyEvent.VK_H && isCombat) {
 			player.drinkPotion();
 		}
@@ -1047,7 +1043,7 @@ public class GameWindow extends JFrame implements
 				soundManager.stopSound("combat");
 				soundManager.playSound("forest", true);
 
-				
+				player.setAction("");
 			}
 		} catch (Exception e) {
 			//TODO: handle exception
@@ -1189,6 +1185,21 @@ public class GameWindow extends JFrame implements
 			currNPCTarget = npcs.get(2);
 		} else {
 			currNPCTarget = npcs.get(0);
+		}
+		
+		
+	}
+
+	public void cycleEnemies() {
+		
+		if (enemies.size() > 1) {
+			if (enemies.get(0).equals(currNPCTarget)) {
+				currNPCTarget = npcs.get(1);
+			} else if (npcs.get(1).equals(currNPCTarget)) {
+				currNPCTarget = npcs.get(2);
+			} else {
+				currNPCTarget = npcs.get(0);
+			}
 		}
 		
 		
