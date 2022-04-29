@@ -58,6 +58,7 @@ public class Player {
    private boolean isTalking;
    private String line;
    private Image chatBoxImage;
+   private Image namePlateImage;
 
    // Economy related stuff;
 
@@ -67,6 +68,7 @@ public class Player {
       this.window = window;
 
       chatBoxImage = ImageManager.loadImage ("images/dialogue-box-png.png");
+      namePlateImage = ImageManager.loadImage ("images/Nameplate.png");
 
       playerLeftImage = loadImage("images/playerLeft.gif");
       playerRightImage = loadImage("images/playerRight.gif");
@@ -106,14 +108,17 @@ public class Player {
 	   //g2.drawImage (playerImage, x, y, XSIZE, YSIZE, null);
       curr_Animation.draw(g2, x, y);
 
+      g2.drawImage(namePlateImage, x - 15, y -40, 75, 35, null);
+
+
       Font f = new Font ("Calibri", Font.BOLD, 14);
       g2.setFont (f);
       g2.setColor(Color.BLACK);
       g2.drawString(action, 20 + x,  y - 35 );
 
-      g2.drawString("Lillia", 20 + x,  y - 25 );
+      g2.drawString("Lillia lvl " + lvl,  x - 5,  y - 25 );
 
-      g2.drawString("" + hp, 25 + x,  y - 15 );
+      g2.drawString("" + hp + " HP", 7 + x,  y - 15 );
 
       f = new Font ("Calibri", Font.BOLD, 60);
       g2.setFont (f);

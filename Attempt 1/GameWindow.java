@@ -891,7 +891,7 @@ public class GameWindow extends JFrame implements
 			currNPCTarget.talk();
 		}
 		else 
-		if (keyCode == KeyEvent.VK_TAB && isChap2) {
+		if (keyCode == KeyEvent.VK_E && isChap2) {
 			cycleTargets();
 		}
 	}
@@ -1183,48 +1183,12 @@ public class GameWindow extends JFrame implements
 	}
 
 	public void cycleTargets() {
-		if (!npcs.isEmpty()) {
-			if (currNPCTarget== null) {
-				currNPCTarget = npcs.get(0);
-			}
-			else if (npcs.size() == 2) {
-				if (npcs.get(0).equals(currNPCTarget)) {
-					currNPCTarget = npcs.get(1);
-				} else {
-					currNPCTarget = npcs.get(0);
-				}
-				
-			} else if(npcs.size() > 2){
-				int j = npcs.size();
-
-				if (currNPCTarget.equals(npcs.get(j - 1))) {
-					currNPCTarget = npcs.get(0);
-
-				}
-				else{
-					for(int i = 0; i <= j ; i++)
-					{
-	
-	
-						if (npcs.get(i).equals(currNPCTarget)) {
-							currNPCTarget = npcs.get(i + 1);
-							break;
-						}
-					}
-				}
-
-				
-				/* for (Targetable t : targetable) {
-					if (t.equals(currTarget)) {
-						currTarget = targetable.get(i + 1);
-						System.out.println("hi");
-					}
-					
-				} */
-
-				
-
-			}
+		if (npcs.get(0).equals(currNPCTarget)) {
+			currNPCTarget = npcs.get(1);
+		} else if (npcs.get(1).equals(currNPCTarget)) {
+			currNPCTarget = npcs.get(2);
+		} else {
+			currNPCTarget = npcs.get(0);
 		}
 		
 		

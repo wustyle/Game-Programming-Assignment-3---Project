@@ -50,6 +50,8 @@ public class NPC {
     private Image chatBoxImage;
 
     private Image targetImage;
+    private Image namePlateImage;
+
 
 
     public NPC (JFrame w, Player p, int X, int Y, String n)
@@ -59,6 +61,8 @@ public class NPC {
         y = Y;
         i=0;
 
+        
+
         this.window = (GameWindow) w;
         this.player= p;
 
@@ -67,6 +71,8 @@ public class NPC {
         isTalking = false;
         chatBoxImage = ImageManager.loadImage ("images/dialogue-box-png.png");
         targetImage = ImageManager.loadImage ("images/Ship1_Explosion_013.png");
+        namePlateImage = ImageManager.loadImage ("images/Nameplate.png");
+
         int upgrades[] = {100, 200, 300, 400, 500};
 
         if(name == "Jon"){
@@ -144,10 +150,13 @@ public class NPC {
 
         curr_Animation.draw(g2, x, y);
 
-        Font f = new Font ("Calibri", Font.ITALIC, 14);
+        g2.drawImage(namePlateImage, x - 15, y -40, 125, 35, null);
+
+
+        Font f = new Font ("Calibri", Font.BOLD, 14);
          g2.setFont (f);
-         g2.setColor(Color.WHITE);
-         g2.drawString(name, 20 + x,  y - 25 );
+         g2.setColor(Color.black);
+         g2.drawString(name,  x -10,  y - 25 );
 
          if (isTalking) {
             if (y <300) {
