@@ -361,7 +361,9 @@ public class NPC {
   
      }
 
-    
+    public void setTalking(boolean isTalking) {
+        this.isTalking = isTalking;
+    }
 
 }
 

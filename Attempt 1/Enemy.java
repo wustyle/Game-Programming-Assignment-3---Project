@@ -136,7 +136,7 @@ public class Enemy {
     
     public void draw (Graphics2D g2) {
         if (name == "wraith") {
-            curr_Animation.draw(g2, x, y);
+            curr_Animation.draw(g2, x, y, true);
         } else{
             g2.drawImage(animImage1, x, y, 150, 150, null);
 

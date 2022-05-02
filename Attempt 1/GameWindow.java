@@ -109,7 +109,7 @@ public class GameWindow extends JFrame implements
 		//panels.add(initNewPanel());
 
 		isCombat = false;
-		isChap2  = false;
+		isChap2  = true;
 		isGameOver = false;
 		isWon = false;
 
@@ -978,6 +978,8 @@ public class GameWindow extends JFrame implements
 		else 
 		if (isOverShowAnimButton && isChap2) {
 			isChap2 = false;
+			currNPCTarget.setTalking(false);
+			player.setTalking(false);
 		}
 		else
 		if (isOverStopButton) {		
@@ -1179,7 +1181,10 @@ public class GameWindow extends JFrame implements
 	}
 
 	public void cycleTargets() {
-		if (npcs.get(0).equals(currNPCTarget)) {
+		currNPCTarget.setTalking(false);
+		player.setTalking(false);
+		
+		if (npcs.get(0).equals(currNPCTarget)) {			
 			currNPCTarget = npcs.get(1);
 		} else if (npcs.get(1).equals(currNPCTarget)) {
 			currNPCTarget = npcs.get(2);

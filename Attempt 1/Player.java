@@ -129,6 +129,7 @@ public class Player {
 
       
       if (isTalking) {
+         f = new Font ("Calibri", Font.BOLD, 14);
          if (y <300) {
             g2.drawImage(chatBoxImage, x - 5, y+90, 250, 150, null);
             g2.setFont (f);
