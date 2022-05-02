@@ -132,6 +132,16 @@ public class Anim {
         //g2.dispose();
      }
 
+    public void draw (Graphics2D g2, int x, int y, boolean isEnemy) {				// draw the current frame on the graphics context
+
+    //Graphics g = panel.getGraphics ();
+    //Graphics2D g2 = (Graphics2D) g;
+
+    g2.drawImage(getImage(), x, y, 150, 150, null);
+
+    //g2.dispose();
+    }
+
     public int getNumFrames() {					// find out how many frames in animation
 	return frames.size();
     }
