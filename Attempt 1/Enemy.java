@@ -265,6 +265,10 @@ public class Enemy {
 
         //HP = 0;
 
+        if (name == "Wraith King!!!") {
+            window.setWon(true);
+        }
+
         window.removeEnemy(this);
     }
     public void die2() {
@@ -282,7 +286,7 @@ public class Enemy {
     private void loot() {
         window.addLoot(new Item(""));
 
-        player.MoneyPlusPlus(LVL * 3);
+        player.MoneyPlusPlus(LVL * 5);
         
         player.lvlUp();
     }

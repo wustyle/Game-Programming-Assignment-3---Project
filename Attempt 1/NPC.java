@@ -100,6 +100,7 @@ public class NPC {
             up_Animation = loadAnimation("images/NPC/tile", 3, 90);
             //idle_Animation = loadAnimation("images/NPC/tile", 3, 21);
 
+            lines.add("Oh, hello there.");
             lines.add("Hello, I'm Lillia, I need to go through the Forbidden Forest to go back home. Can you help me?");
             lines.add("The Forbidden Forest? That's quite a scary place for a tiny person like you.");
             lines.add("Please, I don't belong here. My parents must be worried about me.");

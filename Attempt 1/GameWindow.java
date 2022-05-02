@@ -271,6 +271,11 @@ public class GameWindow extends JFrame implements
 
 	public void gameRender (Graphics gScr) {		// draw the game objects
 
+		if (isWon) {
+			Victory(gScr);
+			//not sure what to do when game over
+		} 
+		else
 		if (isGameOver) {
 			GameOver(gScr);
 			//not sure what to do when game over
@@ -644,7 +649,7 @@ public class GameWindow extends JFrame implements
 		} else if (isCombat) {
 			g.drawString(" Attack", pauseButtonArea.x+45, pauseButtonArea.y+25);
 		} else {
-			g.drawString("Force Combat", pauseButtonArea.x+45, pauseButtonArea.y+25);
+			g.drawString("Force Combat", pauseButtonArea.x+25, pauseButtonArea.y+25);
 		}
 
 		// draw the stop 'button'
@@ -789,7 +794,7 @@ public class GameWindow extends JFrame implements
 			return;				//  one of these keys (ESC, Q, END)			
          	}
 		else
-		if (keyCode == KeyEvent.VK_LEFT) {
+		if (keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_A) {
 			if (isCombat) {
 				return;
 			}
@@ -801,7 +806,7 @@ public class GameWindow extends JFrame implements
 			}
 		}
 		else
-		if (keyCode == KeyEvent.VK_RIGHT) {
+		if (keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_D) {
 			if (isCombat) {
 				return;
 			}
@@ -813,7 +818,7 @@ public class GameWindow extends JFrame implements
 			}
 		}
 		else
-		if (keyCode == KeyEvent.VK_UP) {
+		if (keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_W) {
 			if (isCombat) {
 				return;
 			}
@@ -825,7 +830,7 @@ public class GameWindow extends JFrame implements
 			}
 		}
 		else
-		if (keyCode == KeyEvent.VK_DOWN) {
+		if (keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_S) {
 			if (isCombat) {
 				return;
 			}
@@ -836,7 +841,7 @@ public class GameWindow extends JFrame implements
 				randomCombat();
 			}
 		}
-		else
+		/* else
 		if (keyCode == KeyEvent.VK_I) {
 			
 
@@ -849,41 +854,7 @@ public class GameWindow extends JFrame implements
 				inventory.setVisible(true);
 				isInventoryVisible = true;
 			}
-		}
-		else 
-		if (keyCode == KeyEvent.VK_C && isChap2) {
-			enterBossCombat();
-		}
-		else 
-		if (keyCode == KeyEvent.VK_C && !isCombat) {
-			enterCombat();
-		}
-		else 
-		if (keyCode == KeyEvent.VK_N && !isChap2) {
-			
-		}
-		else 
-		if (keyCode == KeyEvent.VK_A && isCombat) {
-			attack();
-		}
-		else 
-		if (keyCode == KeyEvent.VK_X) {
-
-			System.out.println(CM.isVisible());
-			if(CM.isVisible()) {
-				CM.setVisible(false);
-				//isInventoryVisible = false;
-				
-			}
-			else {
-				CM.setVisible(true);
-				//isInventoryVisible = true;
-			}
-		}
-		else 
-		if (keyCode == KeyEvent.VK_H && isCombat) {
-			player.drinkPotion();
-		}
+		} */
 		else 
 		if (keyCode == KeyEvent.VK_T && isChap2) {
 			currNPCTarget.talk();
@@ -891,6 +862,10 @@ public class GameWindow extends JFrame implements
 		else 
 		if (keyCode == KeyEvent.VK_E && isChap2) {
 			cycleTargets();
+		}
+		else 
+		if (keyCode == KeyEvent.VK_E && isCombat) {
+			cycleEnemies();
 		}
 	}
 
@@ -982,6 +957,10 @@ public class GameWindow extends JFrame implements
 			isChap2 = false;
 			currNPCTarget.setTalking(false);
 			player.setTalking(false);
+
+			soundManager.stopSound("village");;
+			soundManager.playSound("forest", true);
+
 		}
 		else
 		if (isOverStopButton) {		
