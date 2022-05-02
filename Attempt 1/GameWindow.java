@@ -1210,5 +1210,18 @@ public class GameWindow extends JFrame implements
 		
 	}
 
+	public void summonEnemies() {
+		if (enemies.size() < 2) {
+			enemies.add(new Enemy(this, player, 600, 200));
+
+			currTarget = enemies.get(1);
+		}
+		else if (enemies.size() < 3) {
+			enemies.add(new Enemy(this, player, 900, 600));
+
+			currTarget = enemies.get(1);
+		}
+	}
+
 
 }

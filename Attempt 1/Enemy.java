@@ -78,18 +78,13 @@ public class Enemy {
         x = 750;
         y = 400;
 
-        genLootTable(2);
-        setName(2);
         
-        animation.setLocation(750, 400);
+        
+        genBoss();
 
         action = "";
 
-            LVL = player.getLVL() + 2;
             
-            HP = LVL * 25;
-
-            dmg = LVL * 4;
 
     }
 
@@ -122,24 +117,45 @@ public class Enemy {
             anim_stop_counter = 1;
         }
 
-        if (name == "Charizard!!!") {
-            LVL = player.getLVL() + 2;
+        
+    }
+
+    private void genBoss() {
+        Random rand = new Random();
+
+        int i = rand.nextInt(1);
+        i = 2;
+        genLootTable(i);
+        setName(i);
+
+        
+
+        if (i == 2) {
+            LVL = 10;
             
             HP = LVL * 25;
 
             dmg = LVL * 4;
 
-            animImage1 = loadImage("images/enemies/charizard.jpg");
+            idle_animation = loadAnimation("images/enemies/Flipped/Flipped/Idle/Wraith_03_Idle_", 12, 0);
+            die_Animation = loadAnimation("images/enemies/Flipped/Flipped/Dying/Wraith_03_Dying_", 15, 0);
+            atk_animation = loadAnimation("images/enemies/Flipped/Flipped/AttackingFlip/Wraith_03_Attack_", 12, 0);
+            hurt_animation = loadAnimation("images/enemies/Flipped/Flipped/Hurt/Wraith_03_Hurt_", 12, 0);
+            cast_animation = loadAnimation("images/enemies/Flipped/Flipped/Casting/Wraith_03_Casting Spells_", 18, 0);
+            taunt_animation = loadAnimation("images/enemies/Flipped/Flipped/Taunt/Wraith_03_Taunt_", 18, 0);
+            curr_Animation = idle_animation;
 
+            anim_stop_condition = 12;
+            anim_stop_counter = 1;
         }
+
     }
     
     public void draw (Graphics2D g2) {
         if (name == "wraith") {
             curr_Animation.draw(g2, x, y, true);
         } else{
-            g2.drawImage(animImage1, x, y, 150, 150, null);
-
+            curr_Animation.draw(g2, x, y, true);
         }
         
 
@@ -177,6 +193,30 @@ public class Enemy {
 
                 HP = LVL * 3;
 
+                curr_Animation = cast_animation;
+                anim_stop_counter = 1;
+                anim_stop_condition = 18;
+            }
+        }
+        else if (name == "Wraith King!!!") {
+            if (i == 1) {
+                attack();
+    
+                curr_Animation = atk_animation;
+                anim_stop_counter = 1;
+                anim_stop_condition = 12;
+            }
+            else if (i == 2) {
+                action = "iuyjjvkbulkjcvhjbkkj - speaks in undeath...";
+                
+                curr_Animation = taunt_animation;
+                anim_stop_counter = 1;
+                anim_stop_condition = 18;
+            } else {
+                action = "Necromancy - Undead energies flow to the wraith!";
+
+                window.summonEnemies();
+                
                 curr_Animation = cast_animation;
                 anim_stop_counter = 1;
                 anim_stop_condition = 18;
@@ -255,7 +295,7 @@ public class Enemy {
         if (i == 1) {
             name = "wraith";
         } else {
-            name = "Charizard!!!";
+            name = "Wraith King!!!";
 
         }
     }
