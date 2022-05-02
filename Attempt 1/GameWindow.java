@@ -629,8 +629,10 @@ public class GameWindow extends JFrame implements
 		// draw the pause 'button'
 
 		g.setColor(Color.BLACK);
+		
 		g.drawOval(pauseButtonArea.x, pauseButtonArea.y, 
 			   pauseButtonArea.width, pauseButtonArea.height);
+		g.fillOval(pauseButtonArea.x, pauseButtonArea.y, pauseButtonArea.width, pauseButtonArea.height);
 
 		if (isOverPauseButton && !isStopped)
 			g.setColor(Color.WHITE);
@@ -650,7 +652,7 @@ public class GameWindow extends JFrame implements
 		g.setColor(Color.BLACK);
 		g.drawOval(stopButtonArea.x, stopButtonArea.y, 
 			   stopButtonArea.width, stopButtonArea.height);
-
+		g.fillOval(stopButtonArea.x, stopButtonArea.y, stopButtonArea.width, stopButtonArea.height);
 		if (isOverStopButton && !isStopped)
 			g.setColor(Color.WHITE);
 		else
@@ -669,7 +671,7 @@ public class GameWindow extends JFrame implements
 		g.setColor(Color.BLACK);
 		g.drawOval(showAnimButtonArea.x, showAnimButtonArea.y, 
 			   showAnimButtonArea.width, showAnimButtonArea.height);
-
+		g.fillOval(showAnimButtonArea.x, showAnimButtonArea.y, showAnimButtonArea.width, showAnimButtonArea.height);
 		if (isOverShowAnimButton && !isPaused && !isStopped)
 			g.setColor(Color.WHITE);
 		else
