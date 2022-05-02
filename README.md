@@ -5,4 +5,4 @@ This project is not made for profit, only educational purposes.
 Thank you to all the creators of the media used.
 
 <br>
-## Open Game by Running the "Code for game" folder
+Open Game by Running the "Code for game" folder
