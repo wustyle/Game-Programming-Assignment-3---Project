@@ -992,6 +992,8 @@ public class GameWindow extends JFrame implements
 		else 
 		if (isOverShowAnimButton) {
 			isChap2 = true;				//Go to village
+			soundManager.stopSound("forest");
+			soundManager.playSound("village", true);
 		}
 		
 		/* else
@@ -1153,6 +1155,9 @@ public class GameWindow extends JFrame implements
 	}
 
 	private void enterBossCombat(){
+		soundManager.stopSound("forest");
+		soundManager.stopSound("village");
+		soundManager.playSound("combat", true);
 		player.setX(300);
 		player.setY(400);
 
@@ -1163,6 +1168,7 @@ public class GameWindow extends JFrame implements
 		isCombat = true;
 
 		items = new ArrayList<>();
+
 	}
 
 
